@@ -12,7 +12,6 @@
     define('PATH_PUBLIC', "Public");
     require(PATH_APPLICATION_ROOT . 'dispatcher.php');
 
-    AuthenticationService::get_instance()->refresh_session();
     $Dispatcher = new Dispatcher();
     $Dispatcher->dispatch();
 ?>
