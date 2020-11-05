@@ -9,7 +9,8 @@
     define('PATH_CORE', PATH_APPLICATION_ROOT."Core");
     define('PATH_PARSER', PATH_APPLICATION_ROOT."Parser");
     define('PATH_EXCEPTION', PATH_APPLICATION_ROOT."Exception");
-    define('PATH_PUBLIC', "Public");
+    define('PATH_PUBLIC',PATH_ROOT."public");
+    define('PATH_IMAGES', PATH_PUBLIC."/images");
     require(PATH_APPLICATION_ROOT . 'dispatcher.php');
 
     $Dispatcher = new Dispatcher();

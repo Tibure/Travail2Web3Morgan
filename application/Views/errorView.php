@@ -1,0 +1,1 @@
+<h3>Impossible d'accèder à la base de données, veuillez réessayer plus tard.</h3>
