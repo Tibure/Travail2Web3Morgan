@@ -18,8 +18,8 @@ CREATE TABLE tbl_Game(
 DROP TABLE IF EXISTS `tbl_Puzzle`;
 CREATE TABLE tbl_Puzzle(
         PuzzleID        Int  Auto_increment  NOT NULL ,
-        Title           Varchar (50) NOT NULL ,
-        Question        Varchar (50) NOT NULL ,
+        Title           Varchar (50) NOT NULL UNIQUE,
+        Question        Varchar (50) NOT NULL UNIQUE,
         Answer          Varchar (50) NOT NULL ,
         PuzzleOrder     Int NOT NULL UNIQUE,
         GameID          Int NOT NULL 
@@ -30,10 +30,10 @@ CREATE TABLE tbl_Puzzle(
 DROP TABLE IF EXISTS `tbl_Teams`;
 CREATE TABLE tbl_Teams(
         TeamID          Int  Auto_increment  NOT NULL ,
-        Name            Varchar (50) NOT NULL ,
+        Name            Varchar (50) NOT NULL UNIQUE,
         CurrentPuzzleID Int NOT NULL ,
         GameID          Int NOT NULL ,
-        Email           Varchar (50) NOT NULL ,
+        Email           Varchar (50) NOT NULL UNIQUE,
         Password        Varchar (50) NOT NULL ,
         GameMaster      Bool NOT NULL ,
         LastAnswerSent  Time NOT NULL 
