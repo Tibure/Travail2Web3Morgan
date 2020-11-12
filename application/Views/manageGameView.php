@@ -1,40 +1,67 @@
 <div class="container">
     <label for="puzzleSelect">Choisissez l'énigme à modifier</label>
     <div class="list-group">
-        <a href="?=CodeMorse" class="list-group-item list-group-item-action active">code morse</a>
-        <a href="#" class="list-group-item list-group-item-action">images turbulantes</a>
-        <a href="#" class="list-group-item list-group-item-action">l'animal et l'homme</a>
-        <a href="#" class="list-group-item list-group-item-action">les chiffres</a>
+        <a href="?=CodeMorse" class="list-group-item list-group-item-action">code morse
+            <a href="#" class="list-group-item list-group-item-action">images turbulantes</a>
+            <a href="#" class="list-group-item list-group-item-action">l'animal et l'homme</a>
+            <a href="#" class="list-group-item list-group-item-action">les chiffres</a>
+            <a href="?=NewPuzzle" class="list-group-item list-group-item-action active">Ajouter une énigme</a>
     </div>
 </div>
 <br>
-<div class="container">
+<form class="needs-validation" novalidate>
+    <div class="container">
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Image de l'énigme : </span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="nom">Nom de l'énigme : </span>
+            </div>
+            <input type="text" class="form-control" value="Entrer un nom." aria-label="nom" aria-describedby="nom"
+                REQUIRED>
+            <div class="invalid-feedback">
+                Le champ ne peux pas être vide.
+            </div>
         </div>
-        <img src="public/images/MorseCode.jpg" class="img-fluid" alt="Responsive image">
-        <button type="button" class="btn btn-warning">choisissez une image</button>
-    </div>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Question de l'énigme : </span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="image">Image de l'énigme : </span>
+            </div>
+            <img src="public/images/MorseCode.jpg" class="img-fluid" alt="Responsive image" hidden>
+            <button type="button" class="btn btn-warning">choisissez une image</button>
         </div>
-        <input type="text" class="form-control" value="Question 1 : Vous devez résoudre le code morse."
-            aria-label="question" aria-describedby="question">
-    </div>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">indice de l'énigme :</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="question">Question de l'énigme : </span>
+            </div>
+            <input type="text" class="form-control" value="Entrer une Question." aria-label="question"
+                aria-describedby="question" REQUIRED>
+            <div class="invalid-feedback">
+                Le champ ne peux pas être vide.
+            </div>
         </div>
-        <input type="text" class="form-control" value="Déchiffrer le code dans le bas de l'image." aria-label="question"
-            aria-describedby="question">
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="indice">indice de l'énigme :</span>
+            </div>
+            <input type="text" class="form-control" value="Entrer un indice." aria-label="indice"
+                aria-describedby="indice" REQUIRED>
+            <div class="invalid-feedback">
+                Le champ ne peux pas être vide.
+            </div>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="enablePuzzle">
+            <label class="form-check-label" for="enablePuzzle">L'énigme est activer </label>
+        </div>
+
+        <div class="input-group mb-3">
+            <button type="submit" class="btn btn-success " style="margin-right:10px" >Ajouter</button>
+            <button type="submit" class="btn btn-primary " style="margin-right:10px"hidden>Sauvegarder</button>
+            <button type="submit" class="btn btn-danger " style="margin-right:10px"hidden>Supprimer</button>
+        </div>
     </div>
-    <div class="input-group mb-3">
-        <button type="button" class="btn btn-primary "style="margin-right:10px">Sauvegarder</button>
-        <button type="button" class="btn btn-danger "style="margin-right:10px">Supprimer</button>
-    </div>
-</div>
+</form>
