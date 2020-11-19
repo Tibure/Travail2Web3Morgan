@@ -9,8 +9,9 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <?php
-            echo '<link rel="stylesheet" href="/'.PATH_PUBLIC.'/CSS/mainCSS.css" >'
+            echo '<link rel="stylesheet" href="public/CSS/mainCSS.css" >'
         ?>
+
         <title>Mon site</title>
     </head>
     <body>
@@ -24,7 +25,7 @@
             <?= $content ?> 
         </div>
         <?php
-            require("js.php")
+            require("js.php");
         ?>
     </body>
 </html>

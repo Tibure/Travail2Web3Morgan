@@ -6,6 +6,7 @@
         private $request;
 
         public function dispatch(){
+            //! regarder si il a une variable de session pour empêcher de l'emener a conneciton si il en a une
             $this->request = new Request();
             $controller = $this->load_controller();
             $params = $this->request->get_params();

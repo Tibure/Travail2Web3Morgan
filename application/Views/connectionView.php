@@ -1,3 +1,9 @@
+<?php 
+echo('<script type="text/javascript" src="\public\js\connection.js"></script>');
+?>
+
+
+
 <form class="needs-validation" novalidate>
     <div class="form-group">
         <label for="email">Adresse courriel</label>
@@ -13,5 +19,5 @@
             Veuillez remplir ce champ.
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Se connecter</button>
+    <button type="submit"  class="btn btn-primary" id="connect_btn">Se connecter</button>
 </form>

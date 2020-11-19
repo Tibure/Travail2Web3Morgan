@@ -3,6 +3,7 @@
     define('PATH_ROOT', str_replace("application/index.php", "", $_SERVER["SCRIPT_FILENAME"]));
     define('PATH_APPLICATION_ROOT', str_replace("index.php", "", $_SERVER["SCRIPT_FILENAME"]));
     define('PATH_VIEWS', PATH_APPLICATION_ROOT."Views");
+    define('PATH_SERVICE', PATH_APPLICATION_ROOT."Services");
     define('PATH_CONTROLLERS', PATH_APPLICATION_ROOT."Controllers");
     define('PATH_MODELS', PATH_APPLICATION_ROOT."Models");
     define('PATH_DTO', PATH_APPLICATION_ROOT."DTO");

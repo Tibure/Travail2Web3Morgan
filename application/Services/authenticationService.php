@@ -25,12 +25,15 @@
         }
 
         public function login($email, $password)
-        {
+        {   
+            var_dump($valuetemp);
             if (attempt_login($password, $email)) {
                 $_SESSION["login"] = true;
+                $_SESSION["current_user"] = $email;
+                var_dump($_SESSION);
             }
             else {
-                /*Appel AJAX no team found brother*/
+
             }
         }
 
