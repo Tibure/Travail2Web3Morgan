@@ -37,13 +37,6 @@
             
         }
 
-        private function show_add_team(){
-            $view = new View("addUserView.php");
-            $data = array();
-            $content = $view->render($data);
-            echo $this->render_template_with_content(self::ADD_USER_PAGE_TITLE, $content);
-        }
-
         private function add_user($user_to_add_DTO){
             $this->user_model->add_user($user_to_add_DTO);
         }
