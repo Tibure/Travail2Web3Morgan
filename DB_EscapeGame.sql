@@ -91,5 +91,6 @@ DELIMITER ;;
     END;;
 DELIMITER ;
 
-
+ INSERT INTO tbl_Teams(email, name, password, game_master)
+			VALUES('email@email.com', 'cote', '123password', false);
 
