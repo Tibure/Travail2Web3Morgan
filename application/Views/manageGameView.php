@@ -27,10 +27,13 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="image">Image de l'énigme : </span>
             </div>
-            <img src="public/images/MorseCode.jpg" class="img-fluid" alt="Responsive image" hidden>
-            <button type="button" class="btn btn-warning">choisissez une image</button>
-        </div>
+            
 
+            <?php 
+            echo ('<script type="text/javascript" src="/'.PATH_PUBLIC.'\js\addFile.js"></script>');
+            ?>
+
+        </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="question">Question de l'énigme : </span>
@@ -53,15 +56,26 @@
             </div>
         </div>
 
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="reponse">Réponse de l'énigme</span>
+            </div>
+            <input type="text" class="form-control" value="Entrer une réponse." aria-label="reponse"
+                aria-describedby="reponse" REQUIRED>
+            <div class="invalid-feedback">
+                Le champ ne peux pas être vide.
+            </div>
+        </div>
+
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="enablePuzzle">
-            <label class="form-check-label" for="enablePuzzle">L'énigme est activer </label>
+            <label class="form-check-label" for="enablePuzzle">Énigme active </label>
         </div>
 
         <div class="input-group mb-3">
-            <button type="submit" class="btn btn-success " style="margin-right:10px" >Ajouter</button>
-            <button type="submit" class="btn btn-primary " style="margin-right:10px"hidden>Sauvegarder</button>
-            <button type="submit" class="btn btn-danger " style="margin-right:10px"hidden>Supprimer</button>
+            <button type="submit" class="btn btn-success " style="margin-right:10px">Ajouter</button>
+            <button type="submit" class="btn btn-primary " style="margin-right:10px" hidden>Sauvegarder</button>
+            <button type="submit" class="btn btn-danger " style="margin-right:10px" hidden>Supprimer</button>
         </div>
     </div>
 </form>
