@@ -12,7 +12,10 @@
     define('PATH_EXCEPTION', PATH_APPLICATION_ROOT."Exception");
     define('PATH_PUBLIC',PATH_ROOT."public");
     define('PATH_IMAGES', PATH_PUBLIC."/images");
+    define('PATH_FILES', PATH_ROOT. "files");
+
     require(PATH_APPLICATION_ROOT . 'dispatcher.php');
+
 
     $Dispatcher = new Dispatcher();
     $Dispatcher->dispatch();
