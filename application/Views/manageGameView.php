@@ -1,3 +1,6 @@
+
+
+
 <div class="container">
     <label for="puzzleSelect">Choisissez l'énigme à modifier</label>
     <div class="list-group">
@@ -27,11 +30,18 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="image">Image de l'énigme : </span>
             </div>
+           <form action="/file/addFile" id="add_file" method="post" novalidate class="needs-validation"
+                enctype="multipart/form-data">
+                <div class="form-group align-middle ">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="file" name="file">
+                        <label class="custom-file-label" for="file">Veuillez choisir une image de type jpg</label>
+                        <button type="button" class="btn btn-primary">Soumettre</button>
+                    </div>
+                </div>
+            </form>
             
-
-            <?php 
-            echo ('<script type="text/javascript" src="/'.PATH_PUBLIC.'\js\addFile.js"></script>');
-            ?>
+      
 
         </div>
         <div class="input-group mb-3">
