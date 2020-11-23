@@ -39,9 +39,7 @@
 
             try{
                 print($filename);
-
                 $statementHandle->execute(["name"=>$filename]);
-                print("allo15");
             }catch(PDOException $e){
                 throw new FileInsertionException('Une erreur est survenu durant l\'insertion.');
             }

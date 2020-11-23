@@ -65,11 +65,8 @@
                 $is_extension_ok = FileService::IsExtensionOk($uploadfile);
                 if($is_file_already_exist == false && $is_extension_ok)
                 {
-                    print("allo16");
                     $this->file_model->add_file($filename);
-                    print("allo34");
                     FileService::get_instance()->add_file();
-                    print("allo2");
                 }
                 else
                 {

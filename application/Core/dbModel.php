@@ -2,7 +2,7 @@
     class dbModel {
         static private $PDOInstance;
         private $host ='127.0.0.1';
-        private $db = 'db_cours2';
+        private $db = 'db_travail2';
         private $db_user = 'root';
         private $db_password = '';
         private $charset = 'utf8mb4';

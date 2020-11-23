@@ -1,5 +1,3 @@
-
-
 <div class="container">
     <span>58 secondes</span><br>
     <img src="public/images/MorseCode.jpg" class="img-fluid" alt="Responsive image">
