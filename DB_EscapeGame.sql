@@ -13,7 +13,12 @@ CREATE TABLE tbl_Game(
 	,CONSTRAINT tbl_Game_PK PRIMARY KEY (game_ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
+DROP TABLE IF EXISTS `tbl_file`;
+CREATE TABLE `tbl_file` (
+  `id_file` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id_file`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `tbl_Puzzle`;
 CREATE TABLE tbl_Puzzle(
@@ -90,6 +95,18 @@ DELIMITER ;;
 		SELECT name, current_puzzle_ID, game_ID, game_master FROM tbl_teams;
     END;;
 DELIMITER ;
+
+DROP procedure IF EXISTS `add_file`;
+DELIMITER ;;
+CREATE PROCEDURE `add_file` (
+    name VARCHAR(255)
+)
+BEGIN
+    insert into tbl_file(name) 
+            values (name);
+END;;
+DELIMITER ;
+
 
  INSERT INTO tbl_Teams(email, name, password, game_master)
 			VALUES('email@email.com', 'cote', '123password', false);

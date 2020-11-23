@@ -58,15 +58,18 @@
            {
                 $filename = FileService::get_instance()->get_upload_file_name();
                 $uploadfile = PATH_FILES . "/" . $filename;
-                $file_size = FileService::get_instance()->get_upload_file_size();
-                var_dump($file_size);
+                //$file_size = FileService::get_instance()->get_upload_file_size();
+                //var_dump($file_size);
                 //$is_file_size_ok = FileService::IsFileSizeOk($file_size);
                 $is_file_already_exist = FileService::IsFileAlreadyExist($filename);
                 $is_extension_ok = FileService::IsExtensionOk($uploadfile);
-                if($is_file_size_ok && $is_file_already_exist == false && $is_extension_ok)
+                if($is_file_already_exist == false && $is_extension_ok)
                 {
+                    print("allo16");
                     $this->file_model->add_file($filename);
+                    print("allo34");
                     FileService::get_instance()->add_file();
+                    print("allo2");
                 }
                 else
                 {
@@ -75,11 +78,8 @@
            }   
            catch(Exception $e)
            {
-                if($is_file_size_ok == false)
-                {
-                    echo $this->render_error("File Size Error", "Le fichier dépasse la taille maximum");
-                }
-                else if($is_file_already_exist == true)
+           
+                if($is_file_already_exist == true)
                 {
                     echo $this->render_error("File Already Exist", "Le fichier existe déjà");
                 }

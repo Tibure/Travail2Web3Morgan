@@ -1,7 +1,7 @@
 <?php
     require_once(PATH_CORE."/dbModel.php");
     require_once(PATH_DTO."/fileDTO.php");
-    require_once(PATH_EXCEPTION."/fileNotFoundException.php");
+    //require_once(PATH_EXCEPTION."/fileNotFoundException.php");
     require_once(PATH_EXCEPTION."/fileInsertionException.php");
 
     class FileModel extends dbModel
@@ -33,14 +33,15 @@
         }
 
         public function add_file($filename){
+
             $pdo = $this->get_pdo_instance();
-            $statementHandle = $pdo ->prepare("CALL ".self::ADD_FILE_PROC_NAME.
-                "(:name)");
+            $statementHandle = $pdo ->prepare("CALL ".self::ADD_FILE_PROC_NAME."(:name)");
 
             try{
-                $statementHandle->execute([
-                    "name"=>$filename
-                ]);
+                print($filename);
+
+                $statementHandle->execute(["name"=>$filename]);
+                print("allo15");
             }catch(PDOException $e){
                 throw new FileInsertionException('Une erreur est survenu durant l\'insertion.');
             }

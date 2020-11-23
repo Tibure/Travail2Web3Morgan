@@ -27,4 +27,3 @@
 
 
 
-<script type="text/javascript" src="/Public\js\addFile.js"></script>
