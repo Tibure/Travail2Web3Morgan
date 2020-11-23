@@ -4,7 +4,7 @@ echo('<script type="text/javascript" src="\public\js\connection.js"></script>');
 
 
 
-<form class="needs-validation" novalidate>
+<form class="needs-validation" id="connectionForm" novalidate>
     <div class="form-group">
         <label for="email">Adresse courriel</label>
         <input type="email" class="form-control" id="email" REQUIRED>
@@ -19,5 +19,5 @@ echo('<script type="text/javascript" src="\public\js\connection.js"></script>');
             Veuillez remplir ce champ.
         </div>
     </div>
-    <button type="submit"  class="btn btn-primary" id="connect_btn">Se connecter</button>
+    <button class="btn btn-primary" id="connect_btn">Se connecter</button>
 </form>

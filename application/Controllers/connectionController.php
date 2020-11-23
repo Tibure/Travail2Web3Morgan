@@ -19,7 +19,11 @@
         }
 
         public function verifyLogin(){
-            var_dump("olla");
+            $email = $_POST['email']; 
+            $password = $_POST['password']; 
+
+            $isValid = AuthenticationService::get_instance()->login($email, $password);
+            echo ($isValid);
         }
     }
 ?>

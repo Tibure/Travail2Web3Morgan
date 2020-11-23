@@ -26,15 +26,15 @@
 
         public function login($email, $password)
         {   
-            var_dump($valuetemp);
-            if (attempt_login($password, $email)) {
+            if ($this->attempt_login($password, $email)) {
                 $_SESSION["login"] = true;
                 $_SESSION["current_user"] = $email;
-                var_dump($_SESSION);
             }
             else {
-
+                $_SESSION["login"] = false;
+                $_SESSION["current_user"] = $null;
             }
+            return $_SESSION["login"];
         }
 
         public function logoff()
@@ -67,6 +67,10 @@
                 return true;
             }
             return false;
+        }
+
+        public function attempt_login($password, $email){
+            return true;
         }
     }
 ?>
