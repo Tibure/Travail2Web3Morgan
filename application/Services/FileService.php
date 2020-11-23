@@ -21,6 +21,7 @@
 
         public function add_file()
         {
+            var_dump($_FILES['file']);
             $uploadfile = PATH_FILES . "/" . basename($_FILES['file']['name']);
  
             echo '<pre>';
