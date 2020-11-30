@@ -3,3 +3,10 @@ document.querySelector('.custom-file-input').addEventListener('change', function
     var nextSibling = e.target.nextElementSibling
     nextSibling.innerText = fileName
   })
+
+  function SelectedImagePuzzle(){
+    newImage = document.getElementById("selectImage").value;
+    document.getElementById("previewImagePuzzle").src = "/files/"+newImage+".jpg";
+  }
+
+  

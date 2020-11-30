@@ -63,7 +63,8 @@
                 //$is_file_size_ok = FileService::IsFileSizeOk($file_size);
                 $is_file_already_exist = FileService::IsFileAlreadyExist($filename);
                 $is_extension_ok = FileService::IsExtensionOk($uploadfile);
-                if($is_file_already_exist == false && $is_extension_ok)
+                $is_not_empty = FileService::IsNotEmpty($uploadfile);
+                if($is_file_already_exist == false && $is_extension_ok && $is_not_empty)
                 {
                     $this->file_model->add_file($filename);
                     FileService::get_instance()->add_file();
@@ -83,6 +84,10 @@
                 else if($is_extension_ok == false)
                 {
                     echo $this->render_error("File Extention Error", "L'extension n'est pas permise");
+                }
+                else if($is_not_empty == false)
+                {
+                    echo $this->render_error("No File Uploaded Error", "Vous devez choisir une image");
                 }
            }
         }

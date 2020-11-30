@@ -44,6 +44,20 @@
             }
             return $is_extension_ok;
         }
+        
+        public static function IsNotEmpty($uploadfile)
+        {
+            $is_not_empty = false;
+            $extension = pathinfo($uploadfile, PATHINFO_EXTENSION);
+            if($extension != "")
+            {
+                $fileName = pathinfo($uploadfile,PATHINFO_FILENAME);
+                if ($fileName != "") {
+                    $is_not_empty = true;
+                }
+            }
+            return $is_not_empty;
+        }
 
         public static function IsFileSizeOk($file_size)
         {
