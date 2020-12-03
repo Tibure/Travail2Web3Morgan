@@ -10,20 +10,35 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="/">Accueil<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="/game/show">Rejoindre la partie<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="/home/launchGame" hidden>Démarrer une partie<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="/manageGame/show" hidden>Gestion des énigmes<span class="sr-only">(current)</span></a>
-      </li>
+      </li>   
     </ul>
+    <?php
+    require_once(PATH_MODELS."/teamModel.php");
+        if($_SESSION["login"] == true){
+          $teamModel = new TeamModel();
+          $userValues = $teamModel->get_credentials_from_email($_SESSION["current_user"]);
+          echo("<li class=\"nav-item\">
+          <a class=\"nav-link\" href=\"/game/show\">Rejoindre la partie<span class=\"sr-only\">(current)</span></a>
+          </li>");
+          echo("<li class=\"nav-item\">
+          <a class=\"nav-link\" href=\"/home/launchGame\">Démarrer une partie<span class=\"sr-only\">(current)</span></a>
+          </li>");
+          echo("<li class=\"nav-item\">
+          <a class=\"nav-link\" href=\"/manageGame/show\">Gestion des énigmes<span class=\"sr-only\">(current)</span></a>
+          </li>");
+
+          echo("Logged in as: ".$userValues["name"]);
+        }else{
+          echo("<li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"/connection/show\">Log in<span class=\"sr-only\">(current)</span></a>
+          </li>");
+          echo("<li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"/inscription/show\" >Sign In<span class=\"sr-only\">(current)</span></a>
+          </li>");
+        }
+      ?>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-
       </li>
     </ul>
   </div>

@@ -4,7 +4,7 @@ echo('<script type="text/javascript" src="\public\js\connection.js"></script>');
 
 
 
-<form class="needs-validation" id="connectionForm" novalidate>
+<form class="needs-validation" id="connectionForm" action="./home/show" novalidate>
     <div class="form-group">
         <label for="email">Adresse courriel</label>
         <input type="email" class="form-control" id="email" REQUIRED>

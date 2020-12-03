@@ -34,13 +34,9 @@
             }
             else {
                 $_SESSION["login"] = false;
-                $_SESSION["current_user"] = $null;
+                $_SESSION["current_user"] = null;
             }
             return $_SESSION["login"];
-        }
-
-        public function signIn($email, $name, $password){
-           self::$team_model->add_team($email, $name, $password);
         }
         public function logoff()
         {
