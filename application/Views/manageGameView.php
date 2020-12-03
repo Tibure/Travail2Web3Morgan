@@ -95,6 +95,18 @@
                 Le champ ne peux pas être vide.
             </div>
         </div>
+        <!--
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="order">Ordre de l'énigme</span>
+            </div>
+            <input type="number" class="form-control" placeholder=" Entrer l'ordre de l'énigme" aria-label="order"
+                aria-describedby="order" REQUIRED>
+            <div class="invalid-feedback">
+                Le champ ne peux pas être vide.
+            </div>
+        </div>
+-->
 
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="enablePuzzle">
