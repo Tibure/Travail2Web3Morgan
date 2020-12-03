@@ -4,6 +4,7 @@
     require_once(PATH_PARSER."/teamParser.php");
     require_once(PATH_EXCEPTION."/noTeamFoundException.php");
     require_once(PATH_EXCEPTION."/insertTeamException.php");
+    require_once(PATH_SERVICE."/authenticationService.php");
 
     class TeamModel extends dbModel
     {
@@ -22,7 +23,7 @@
                 array_push($teams, TeamParser::parse_sql_row($row));
             }
             return $teams;*/
-            $pdo = $this->GetPDOInstance();
+            $pdo = $this->get_pdo_instance();
             $statementHandle = $pdo->query("CALL ".self::GET_ALL_TEAMS_PROC_NAME."()");
             $teams = $statementHandle->fetchAll(PDO::FETCH_CLASS, 'TeamDTO');
             if($teams === false)
@@ -34,7 +35,7 @@
 
         public function get_team(int $team_id)
         {
-            $pdo = $this->GetPDOInstance();
+            $pdo = $this->get_pdo_instance();
             $statementHandle = $pdo->query("CALL ".self::GET_TEAM_BY_ID_PROC_NAME."($team_id)");
             $team = $statementHandle->fetchAll(PDO::FETCH_CLASS, 'TeamDTO');
             if($team === false)
@@ -47,7 +48,7 @@
         
         public function get_game_master()//il y a seulement un game master
         {
-            $pdo = $this->GetPDOInstance();
+            $pdo = $this->get_pdo_instance();
             $statementHandle = $pdo->query("CALL ".self::GET_GAME_MASTER);
             $gameMaster = $statementHandle->fetchAll(PDO::FETCH_CLASS, 'TeamDTO');
             if($gameMaster === false)
@@ -59,7 +60,7 @@
 
         public function get_credentials_from_email($email)
         {
-            $pdo = $this->GetPDOInstance();
+            $pdo = $this->get_pdo_instance();
             $statementHandle = $pdo->prepare("CALL ".self::GET_team_CREDENTIALS_FROM_PROC_NAME."(:email)");
             $statementHandle->execute(["email"=>$email]);
             $team = $statementHandle->fetch(PDO::FETCH_ASSOC);
@@ -80,14 +81,24 @@
             return $success;
         }
 
-        public function add_team(){
-            if($_SERVER['REQUEST_METHOD'] === 'POST')
-            {
-                $team_to_add_DTO = TeamParser::parse_post_from();
-                $this->team_user($team_to_add_DTO);
-                header('Location: /connexion/addTeam');
+        public function add_team($email, $name, $password){
+            try{
+                $passwordHash = $this->hash_password($password);
+                $pdo = $this->get_pdo_instance();
+                $statementHandle = $pdo->prepare("CALL ".self::ADD_TEAM."(:in_email, :in_name, :in_password, :in_game_master)");
+                $statementHandle->execute([
+                    "in_email"=>$email, "in_name"=>$name, "in_password"=>$passwordHash, "in_game_master"=>0
+                ]);
+                return true;
             }
-
+            catch(PDOException $e){
+                var_dump($e);
+                return false;
+            }
+            catch(Exception $e){
+                var_dump(["secondException"=>$e]);
+                return false;
+            }
         }
     }
 ?>

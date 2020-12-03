@@ -3,7 +3,7 @@ $(document).ready(function(){
         document.getElementById("connect_btn").addEventListener("click", function(event){
         event.preventDefault();
         const email = $("#email").val();
-        const password = document.getElementById("password").value;
+        const password = $("password").val();
 
         $.ajax({       
             method:"POST",   

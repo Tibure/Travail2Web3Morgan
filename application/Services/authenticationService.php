@@ -1,5 +1,6 @@
 <?php
     require_once(PATH_MODELS."/teamModel.php");
+
     if(session_status() == PHP_SESSION_NONE)
     {
         session_start();
@@ -7,6 +8,7 @@
     
     class AuthenticationService
     {
+       
         private static $AuthenticationService = null;
         private $team_model;
 
@@ -24,7 +26,7 @@
             return self::$AuthenticationService;
         }
 
-        public function login($email, $password)
+        public function verifyLogin($email, $password)
         {   
             if ($this->attempt_login($password, $email)) {
                 $_SESSION["login"] = true;
@@ -37,6 +39,9 @@
             return $_SESSION["login"];
         }
 
+        public function signIn($email, $name, $password){
+           self::$team_model->add_team($email, $name, $password);
+        }
         public function logoff()
         {
             $_SESSION["login"] = false;
@@ -71,6 +76,9 @@
 
         public function attempt_login($password, $email){
             return true;
+            //hashPassword
+            //vaChercher dans BD
+            //comparer
         }
     }
 ?>

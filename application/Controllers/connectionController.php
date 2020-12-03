@@ -22,7 +22,7 @@
             $email = $_POST['email']; 
             $password = $_POST['password']; 
 
-            $isValid = AuthenticationService::get_instance()->login($email, $password);
+            $isValid = AuthenticationService::get_instance()->verifyLogin($email, $password);
             echo ($isValid);
         }
     }
