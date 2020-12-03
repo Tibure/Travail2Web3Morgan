@@ -26,14 +26,11 @@ CREATE TABLE tbl_Puzzle(
         title           nvarchar (50) NOT NULL UNIQUE,
         question        nvarchar (50) NOT NULL UNIQUE,
         answer          nvarchar (50) NOT NULL ,
+        hint			nvarchar (50) ,
         puzzle_order     Int NOT NULL UNIQUE,
-<<<<<<< HEAD
-        game_ID          Int NOT NULL 
-=======
         game_ID          Int NOT NULL,
-        active			boolean default false,
-        image		    Varchar (50)
->>>>>>> b4412df28982f1e3c7c0361b02890bcdeab4ab6e
+        active 			boolean NOT NULL,
+        image			nvarchar(50) NOT NULL
 	,CONSTRAINT tbl_Puzzle_PK PRIMARY KEY (puzzle_ID)
 	,CONSTRAINT tbl_Puzzle_tbl_Game_FK FOREIGN KEY (game_ID) REFERENCES tbl_Game(game_ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -114,11 +111,7 @@ DELIMITER ;
 DROP procedure IF EXISTS `delete_puzzle_by_id`;
 DELIMITER ;;
 CREATE PROCEDURE `delete_puzzle_by_id`(
-<<<<<<< HEAD
 	IN inPuzzle_ID INT
-=======
-	IN puzzle_ID INT
->>>>>>> b4412df28982f1e3c7c0361b02890bcdeab4ab6e
 )
 BEGIN
 DELETE FROM tbl_Puzzle
@@ -131,7 +124,8 @@ DELIMITER ;;
 CREATE PROCEDURE `add_puzzle`(
         inTitle           nvarchar (50),
         inQuestion        nvarchar (50),
-        inAnswer          nvarchar (50) ,
+        inAnswer          nvarchar (50),
+        inHint			  nvarchar (50),
         inPuzzle_order     Int,
         inGame_ID          Int,
         inActive			boolean,
@@ -139,8 +133,8 @@ CREATE PROCEDURE `add_puzzle`(
 )
 BEGIN
     
-    INSERT INTO tbl_Puzzle(title, question, answer, puzzle_order, game_ID, active, image)
-			VALUES(inTitle, inQuestion, inAnswer, inPuzzle_order, inGame_ID, inActive, inImage);
+    INSERT INTO tbl_Puzzle(title, question, answer, hint, puzzle_order, game_ID, active, image)
+			VALUES(inTitle, inQuestion, inAnswer, inHint, inPuzzle_order, inGame_ID, inActive, inImage);
 END;;
 DELIMITER ;;
 
@@ -150,7 +144,8 @@ CREATE PROCEDURE `modify_puzzle`(
 		inPuzzle_ID		 Int,
         inTitle           nvarchar (50),
         inQuestion        nvarchar (50),
-        inAnswer          nvarchar (50) ,
+        inAnswer          nvarchar (50),
+        inHint			  nvarchar (50),
         inPuzzle_order     Int,
         inGame_ID          Int,
         inActive			boolean,
@@ -163,6 +158,7 @@ BEGIN
         title       =   inTitle,
         question    =  	inQuestion,
         answer      = 	inAnswer ,
+        hint		=	inHint ,
         puzzle_order = 	inPuzzle_order,
         game_ID     =   inGame_ID ,
         active		=	inActive,
@@ -171,15 +167,11 @@ BEGIN
 		puzzle_ID	=	 inPuzzle_ID;
 END;;
 DELIMITER ;;
-
-<<<<<<< HEAD
-
-=======
 DROP PROCEDURE IF EXISTS `get_all_puzzle`;
 DELIMITER ;;
 	CREATE PROCEDURE get_all_puzzle()
     BEGIN
-		SELECT puzzle_ID, title, question, answer, puzzle_order, game_ID, active, image FROM tbl_Puzzle;
+		SELECT puzzle_ID, title, question, answer, hint, puzzle_order, game_ID, active, image FROM tbl_Puzzle;
     END;;
 DELIMITER ;
 
@@ -190,28 +182,17 @@ DELIMITER ;;
 			inPuzzle_ID INT
     )
     BEGIN
-		SELECT title, question, answer, puzzle_order, game_ID, active, image FROM tbl_Puzzle
+		SELECT puzzle_ID, title, question, answer, hint, puzzle_order, game_ID, active, image FROM tbl_Puzzle
         WHERE
 			puzzle_ID = inPuzzle_ID;
         
     END;;
-DELIMITER ;
->>>>>>> b4412df28982f1e3c7c0361b02890bcdeab4ab6e
+DELIMITER ;;
 
- INSERT INTO tbl_Teams(email, name, password, game_master)
-			VALUES('email@email.com', 'cote', '123password', false);
-INSERT INTO tbl_Teams(email, name, password, game_master)
-            VALUES('Anthony.cote@outlook.com', 'admin', 'admin', true);
-
-<<<<<<< HEAD
-SELECT name, game_master FROM tbl_Teams WHERE email = 'Anthony.cote@outlook.com';
-=======
-insert into tbl_Game(game_ID, start_time) values(1, NOW());
-            
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID,image) values (1, 'Skivee', 'Fuscia', 'Claremorris', 1, 1,'image1.jpg');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID,image) values (2, 'Skibox', 'Aquamarine', 'Hualin', 2, 1,'image2.jpg');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID,image)  values (3, 'Yoveo', 'Indigo', 'Ourozinho', 3, 1,'image3.jpg');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID,image) values (4, 'Edgeblab', 'Orange', 'Ruda Śląska', 4, 1,null);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID,image) values (5, 'Brainbox', 'Yellow', 'Pácora', 5, 1,null);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID,image) values (6, 'Babbleset', 'Crimson', 'Zhoutou', 6, 1,null);
->>>>>>> b4412df28982f1e3c7c0361b02890bcdeab4ab6e
+insert into tbl_Game (game_ID, start_time) values (1, now());
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (1, 'Skivee', 'Fuscia', 'Claremorris','jo', 1, 1,0,'image1.jpg');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (2, 'Skibox', 'Aquamarine', 'Hualin','morg', 2, 1,1,'image2.jpg');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (3, 'Yoveo', 'Indigo', 'Ourozinho', 3, 1,1,'image3.jpg');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (4, 'Edgeblab', 'Orange', 'Ruda Śląska', 4, 1,1,'allo');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (5, 'Brainbox', 'Yellow', 'Pácora', 5, 1,1,'allo');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (6, 'Babbleset', 'Crimson', 'Zhoutou', 6, 1,1,'allo');

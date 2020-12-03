@@ -41,11 +41,12 @@
         public function add_puzzle($title, $question, $answer, $puzzle_order, $game_ID, $active, $image){
             $pdo = $this->get_pdo_instance();
             $procedure = $pdo->prepare("Call ".self::ADD_PUZZLE_PROC_NAME.
-            "(:title, :question, :answer, :puzzle_order, :game_ID, :active, :image)");
+            "(:title, :question, :answer, :hint, :puzzle_order, :game_ID, :active, :image)");
             $procedure->execute([
                  'title' => $title,
                  'question' => $question,
                  'answer' => $answer,
+                 'hint' => $hint,
                  'puzzle_order' => $puzzle_order,
                  'game_ID' => $game_ID,
                  'active' => $active,
@@ -56,12 +57,13 @@
         public function modify_puzzle($id_puzzle, $title, $question, $answer, $puzzle_order, $game_ID, $active, $image){
             $pdo = $this->get_pdo_instance();
             $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_PROC_NAME.
-            "(:id_puzzle, :title, :question, :answer, :puzzle_order, :game_ID, :active, :image)");
+            "(:id_puzzle, :title, :question, :answer,:hint, :puzzle_order, :game_ID, :active, :image)");
             $procedure->execute([
                 'id_puzzle' => $id_puzzle,
                  'title' => $title,
                  'question' => $question,
                  'answer' => $answer,
+                 'hint' => $hint,
                  'puzzle_order' => $puzzle_order,
                  'game_ID' => $game_ID,
                  'active' => $active,

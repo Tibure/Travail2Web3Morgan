@@ -75,7 +75,7 @@
                 <span class="input-group-text" id="question">Question de l'énigme : </span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer une Question." aria-label="question"
-                aria-describedby="question" REQUIRED>
+               id="puzzleQuestion" aria-describedby="question" REQUIRED>
             <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
             </div>
@@ -86,7 +86,7 @@
                 <span class="input-group-text" id="indice">indice de l'énigme :</span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer un indice." aria-label="indice"
-                aria-describedby="indice" REQUIRED>
+            id="puzzleHint" aria-describedby="indice" REQUIRED>
             <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
             </div>
@@ -97,7 +97,7 @@
                 <span class="input-group-text" id="reponse">Réponse de l'énigme</span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer une réponse." aria-label="reponse"
-                aria-describedby="reponse" REQUIRED>
+            id="puzzleAnswer" aria-describedby="reponse" REQUIRED>
             <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
             </div>
@@ -116,7 +116,7 @@
 -->
 
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="enablePuzzle">
+            <input type="checkbox" class="form-check-input" id="puzzleActive">
             <label class="form-check-label" for="enablePuzzle">Énigme active </label>
         </div>
 

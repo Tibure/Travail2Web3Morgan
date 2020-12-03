@@ -17,7 +17,6 @@ $(window).on('load', function () {
 
 });
 
-
 $(document).ready(function () {
     $("#PuzzleSelect").on("change", function () {
         const selectedPuzzle = $("#PuzzleSelect option:selected").val();
@@ -29,11 +28,12 @@ $(document).ready(function () {
                 dataType: "json"
             }).then((data) => {
 
-            
-                $("#previewImagePuzzle").attr("src",  data.image);
-                $("#puzzleName").val(data.title);
-
-
+                $("#previewImagePuzzle").attr("src",  data[0].image);
+                $("#puzzleName").val(data[0].title);
+                $("#puzzleQuestion").val(data[0].question);
+                $("#puzzleHint").val(data[0].hint);
+                $("#puzzleAnswer").val(data[0].answer);
+                $("#puzzleActive").attr("checked",data[0].active == 1);
             });
     });
 });
