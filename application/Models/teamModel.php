@@ -60,15 +60,17 @@
 
         public function get_credentials_from_email($email)
         {
-            $pdo = $this->get_pdo_instance();
-            $statementHandle = $pdo->prepare("CALL ".self::GET_team_CREDENTIALS_FROM_PROC_NAME."(:email)");
-            $statementHandle->execute(["email"=>$email]);
-            $team = $statementHandle->fetch(PDO::FETCH_ASSOC);
-            if($team === false)
-            {
+            try{
+                $pdo = $this->get_pdo_instance();
+                $statementHandle = $pdo->prepare("CALL ".self::GET_TEAM_CREDENTIALS_FROM_PROC_NAME."(:in_email)");
+                $statementHandle->execute(["in_email"=>$email]);
+                $team = $statementHandle->fetch(PDO::FETCH_ASSOC);
+                return $team;
+            }
+            catch(PDOException $e){
                 throw new NoteamFoundException();
             }
-            return $team;
+            
         }
 
         public function attempt_login($password, $email){
@@ -83,7 +85,7 @@
 
         public function add_team($email, $name, $password){
             try{
-                $passwordHash = $this->hash_password($password);
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
                 $pdo = $this->get_pdo_instance();
                 $statementHandle = $pdo->prepare("CALL ".self::ADD_TEAM."(:in_email, :in_name, :in_password, :in_game_master)");
                 $statementHandle->execute([

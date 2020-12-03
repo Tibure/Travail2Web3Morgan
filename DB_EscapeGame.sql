@@ -16,19 +16,18 @@ CREATE TABLE tbl_Game(
 DROP TABLE IF EXISTS `tbl_file`;
 CREATE TABLE `tbl_file` (
   `id_file` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` nvarchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_file`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `tbl_Puzzle`;
 CREATE TABLE tbl_Puzzle(
         puzzle_ID        Int  Auto_increment  NOT NULL ,
-        title           Varchar (50) NOT NULL UNIQUE,
-        question        Varchar (50) NOT NULL UNIQUE,
-        answer          Varchar (50) NOT NULL ,
+        title           nvarchar (50) NOT NULL UNIQUE,
+        question        nvarchar (50) NOT NULL UNIQUE,
+        answer          nvarchar (50) NOT NULL ,
         puzzle_order     Int NOT NULL UNIQUE,
-        game_ID          Int NOT NULL,
-        active			boolean default false
+        game_ID          Int NOT NULL 
 	,CONSTRAINT tbl_Puzzle_PK PRIMARY KEY (puzzle_ID)
 	,CONSTRAINT tbl_Puzzle_tbl_Game_FK FOREIGN KEY (game_ID) REFERENCES tbl_Game(game_ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -36,11 +35,11 @@ CREATE TABLE tbl_Puzzle(
 DROP TABLE IF EXISTS `tbl_Teams`;
 CREATE TABLE tbl_Teams(
         team_ID          Int  Auto_increment  NOT NULL ,
-        name            Varchar (50) NOT NULL UNIQUE,
+        name            nvarchar (50) NOT NULL UNIQUE,
 		current_puzzle_ID Int,
         game_ID          Int,
-        email           Varchar (50) NOT NULL UNIQUE,
-        password        Varchar (50) NOT NULL ,
+        email           nvarchar (50) NOT NULL UNIQUE,
+        password        nvarchar (100) NOT NULL ,
         game_master      Bool NOT NULL ,
         last_answer_sent  Time 
 	,CONSTRAINT tbl_Teams_PK PRIMARY KEY (team_ID)
@@ -50,12 +49,10 @@ CREATE TABLE tbl_Teams(
 DROP procedure IF EXISTS `get_team_credentials_from_email`;
 DELIMITER ;;
 CREATE DEFINER=root@localhost PROCEDURE get_team_credentials_from_email(
-    IN in_email varchar(50)
+    IN in_email nvarchar(50)
 )
 BEGIN
     SELECT name,
-    email,
-    password,
     game_master
   FROM tbl_Teams WHERE email = in_email limit 1;
 END;;
@@ -64,9 +61,9 @@ DELIMITER ;
 DROP procedure IF EXISTS `add_team`;
 DELIMITER ;;
 CREATE PROCEDURE add_team(
-    in_email VARCHAR(50),
-    in_name VARCHAR(50),
-	in_password VARCHAR(50),
+    in_email nvarchar(50),
+    in_name nvarchar(50),
+	in_password nvarchar(100),
     in_game_master BOOL
 )
 BEGIN
@@ -100,7 +97,7 @@ DELIMITER ;
 DROP procedure IF EXISTS `add_file`;
 DELIMITER ;;
 CREATE PROCEDURE `add_file` (
-    name VARCHAR(255)
+    name nvarchar(255)
 )
 BEGIN
     insert into tbl_file(name) 
@@ -108,15 +105,68 @@ BEGIN
 END;;
 DELIMITER ;
 
+DROP procedure IF EXISTS `delete_puzzle_by_id`;
+DELIMITER ;;
+CREATE PROCEDURE `delete_puzzle_by_id`(
+	IN inPuzzle_ID INT
+)
+BEGIN
+DELETE FROM tbl_Puzzle
+WHERE puzzle_ID = inPuzzle_ID;
+END;;
+DELIMITER ;;
+
+DROP procedure IF EXISTS `add_puzzle`;
+DELIMITER ;;
+CREATE PROCEDURE `add_puzzle`(
+        inTitle           nvarchar (50),
+        inQuestion        nvarchar (50),
+        inAnswer          nvarchar (50) ,
+        inPuzzle_order     Int,
+        inGame_ID          Int,
+        inActive			boolean,
+		inImage			nvarchar(50)
+)
+BEGIN
+    
+    INSERT INTO tbl_Puzzle(title, question, answer, puzzle_order, game_ID, active, image)
+			VALUES(inTitle, inQuestion, inAnswer, inPuzzle_order, inGame_ID, inActive, inImage);
+END;;
+DELIMITER ;;
+
+DROP procedure IF EXISTS `modify_puzzle`;
+DELIMITER ;;
+CREATE PROCEDURE `modify_puzzle`(
+		inPuzzle_ID		 Int,
+        inTitle           nvarchar (50),
+        inQuestion        nvarchar (50),
+        inAnswer          nvarchar (50) ,
+        inPuzzle_order     Int,
+        inGame_ID          Int,
+        inActive			boolean,
+		inImage			nvarchar(50)
+)
+BEGIN
+    
+    UPDATE tbl_Puzzle
+    SET
+        title       =   inTitle,
+        question    =  	inQuestion,
+        answer      = 	inAnswer ,
+        puzzle_order = 	inPuzzle_order,
+        game_ID     =   inGame_ID ,
+        active		=	inActive,
+		image		=	inImage
+	WHERE
+		puzzle_ID	=	 inPuzzle_ID;
+END;;
+DELIMITER ;;
+
+
 
  INSERT INTO tbl_Teams(email, name, password, game_master)
 			VALUES('email@email.com', 'cote', '123password', false);
+INSERT INTO tbl_Teams(email, name, password, game_master)
+            VALUES('Anthony.cote@outlook.com', 'admin', 'admin', true);
 
-insert into tbl_Game(game_ID, start_time) values(1, NOW());
-            
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (1, 'Skivee', 'Fuscia', 'Claremorris', 1, 1);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (2, 'Skibox', 'Aquamarine', 'Hualin', 2, 1);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (3, 'Yoveo', 'Indigo', 'Ourozinho', 3, 1);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (4, 'Edgeblab', 'Orange', 'Ruda Śląska', 4, 1);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (5, 'Brainbox', 'Yellow', 'Pácora', 5, 1);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (6, 'Babbleset', 'Crimson', 'Zhoutou', 6, 1);
+SELECT name, game_master FROM tbl_Teams WHERE email = 'Anthony.cote@outlook.com';

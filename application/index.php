@@ -16,7 +16,10 @@
 
     require(PATH_APPLICATION_ROOT . 'dispatcher.php');
 
-
+    if(session_status() == PHP_SESSION_NONE)
+    {
+        session_start();
+    }
     $Dispatcher = new Dispatcher();
     $Dispatcher->dispatch();
 ?>

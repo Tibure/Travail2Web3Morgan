@@ -1,11 +1,12 @@
 <?php
     require_once(PATH_SERVICE."/authenticationService.php");
     require_once(PATH_CORE."/controller.php");
+    require_once(PATH_MODELS."/teamModel.php");
 
     class InscriptionController extends Controller{
         
         const INSCRIPTION_TITLE = "Inscription";
-        private $team_model
+        private $team_model;
         public function __construct(){
             $this->team_model = new TeamModel();
         }
@@ -23,7 +24,7 @@
             $name = $_POST['username'];
             $password = $_POST['password']; 
 
-            $isValid = AuthenticationService::get_instance()->signIn($email,  $name, $password);
+            $isValid =  $this->team_model->add_team($email, $name, $password);
             echo ($isValid);
         }
     }

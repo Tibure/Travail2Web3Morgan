@@ -4,7 +4,7 @@ echo('<script type="text/javascript" src="\public\js\inscription.js"></script>')
 
 
 
-<form class="needs-validation" id="inscriptionForm" novalidate>
+<form class="needs-validation" id="inscriptionForm" action="home/show"novalidate>
     <div class="form-group">
         <label for="email">Adresse courriel</label>
         <input type="email" class="form-control" id="email" REQUIRED>
@@ -26,16 +26,6 @@ echo('<script type="text/javascript" src="\public\js\inscription.js"></script>')
             Veuillez remplir ce champ.
         </div>
     </div>
-    <!-- <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="game_master">
-    <label class="form-check-label" for="game_master">Cet utilisateur est un maitre du jeu</label>
-    </div> -->
-    <!-- <div class="form-group">
-        <label for="password">Confirmer mot de passe</label>
-        <input type="password" class="form-control" id="confirmPassword" REQUIRED>
-        <div class="invalid-feedback">
-            Veuillez remplir ce champ.
-        </div>
-    </div> -->
+    
     <button class="btn btn-primary" id="inscription_btn">S'inscrire</button>
 </form>

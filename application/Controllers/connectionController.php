@@ -1,13 +1,14 @@
 <?php
     require_once(PATH_SERVICE."/authenticationService.php");
     require_once(PATH_CORE."/controller.php");
+    require_once(PATH_MODELS."/teamModel.php");
 
     class ConnectionController extends Controller{
         
         const CONNECTION_TITLE = "Connexion";
  
         public function __construct(){
-            
+            $team_model = new TeamModel();
         }
 
         public function show(){

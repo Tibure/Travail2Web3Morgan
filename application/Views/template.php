@@ -17,7 +17,7 @@
         <title>Mon site</title>
     </head>
     <body>
-    <?php
+    <?php   
         include("navBar.php");
     ?>
         <div class="container">
