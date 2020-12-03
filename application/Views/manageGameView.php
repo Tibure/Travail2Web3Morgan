@@ -1,5 +1,5 @@
 <div class="container">
-    <label for="puzzleSelect">Choisissez l'énigme à modifier</label>
+    <!--
     <div class="list-group">
         <a href="?=CodeMorse" class="list-group-item list-group-item-action">code morse
             <a href="#" class="list-group-item list-group-item-action">images turbulantes</a>
@@ -7,6 +7,13 @@
             <a href="#" class="list-group-item list-group-item-action">les chiffres</a>
             <a href="?=NewPuzzle" class="list-group-item list-group-item-action active">Ajouter une énigme</a>
     </div>
+    -->
+
+    <div class="form-group">
+    <label for="PuzzleSelect">Choisissez l'énigme à modifier</label>
+    <select class="form-control" id="PuzzleSelect">
+
+    </select>
 </div>
 <br>
 <div class="container">
@@ -36,7 +43,7 @@
                 <span class="input-group-text" id="nom">Nom de l'énigme : </span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer un nom." aria-label="nom" aria-describedby="nom"
-                REQUIRED>
+                id="puzzleName"  REQUIRED>
             <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
             </div>
@@ -121,3 +128,4 @@
     </div>
 </form>
 <script type="text/javascript" src="/Public\js\addFile.js"></script>
+<script type="text/javascript" src="/Public\js\manageGame.js"></script>

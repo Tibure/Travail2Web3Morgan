@@ -1,8 +1,8 @@
 <?php
     require_once(PATH_CORE."/dbModel.php");
-    require_once(PATH_DTO."/puzzleDTO.php");
+    require_once(PATH_DTO."/manageGameDTO.php");
 
-    class PuzzleModel extends dbModel
+    class ManageGameModel extends dbModel
     {
         const DELETE_PUZZLE_BY_ID_PROC_NAME = "delete_puzzle_by_id";
         const MODIFY_PUZZLE_PROC_NAME = "modify_puzzle";
@@ -10,13 +10,13 @@
         const GET_ALL_PUZZLE_PROC_NAME = "get_all_puzzle";
         const GET_PUZZLE_BY_ID_PROC_NAME = "get_puzzle_by_id";
 
-        public function get_all_puzzle(){
+        public function get_all_puzzles(){
             $pdo = $this->get_pdo_instance();
             $procedure = $pdo->prepare("Call ".self::GET_ALL_PUZZLE_PROC_NAME."()");
             $procedure->execute([
                  
             ]);
-            $lesPuzzles = $procedure->fetchAll(PDO::FETCH_CLASS,"puzzleDTO");
+            $lesPuzzles = $procedure->fetchAll(PDO::FETCH_CLASS,"manageGameDTO");
             return $lesPuzzles;
         }
 
@@ -26,7 +26,7 @@
             $procedure->execute([
                 'id_puzzle' => $id_puzzle
            ]);
-           $lePuzzle = $procedure->fetchAll(PDO::FETCH_CLASS,"puzzleDTO");
+           $lePuzzle = $procedure->fetchAll(PDO::FETCH_CLASS,"manageGameDTO");
            return $lePuzzle;
         }
 

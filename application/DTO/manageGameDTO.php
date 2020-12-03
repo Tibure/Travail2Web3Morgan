@@ -1,14 +1,14 @@
 <?php
-    class PuzzleDTO
+    class ManageGameDTO
     {
-        private $puzzle_ID;
-        private $title;
-        private $question;
-        private $answer;
-        private $puzzle_order;
-        private $game_ID;
-        private $active; 
-        private $image;
+        public $puzzle_ID;
+        public $title;
+        public $question;
+        public $answer;
+        public $puzzle_order;
+        public $game_ID;
+        public $active; 
+        public $image;
         
         public function __construct(){
         }
