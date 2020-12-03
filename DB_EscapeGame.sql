@@ -27,7 +27,8 @@ CREATE TABLE tbl_Puzzle(
         question        Varchar (50) NOT NULL UNIQUE,
         answer          Varchar (50) NOT NULL ,
         puzzle_order     Int NOT NULL UNIQUE,
-        game_ID          Int NOT NULL 
+        game_ID          Int NOT NULL,
+        active			boolean default false
 	,CONSTRAINT tbl_Puzzle_PK PRIMARY KEY (puzzle_ID)
 	,CONSTRAINT tbl_Puzzle_tbl_Game_FK FOREIGN KEY (game_ID) REFERENCES tbl_Game(game_ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -111,3 +112,11 @@ DELIMITER ;
  INSERT INTO tbl_Teams(email, name, password, game_master)
 			VALUES('email@email.com', 'cote', '123password', false);
 
+insert into tbl_Game(game_ID, start_time) values(1, NOW());
+            
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (1, 'Skivee', 'Fuscia', 'Claremorris', 1, 1);
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (2, 'Skibox', 'Aquamarine', 'Hualin', 2, 1);
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (3, 'Yoveo', 'Indigo', 'Ourozinho', 3, 1);
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (4, 'Edgeblab', 'Orange', 'Ruda Śląska', 4, 1);
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (5, 'Brainbox', 'Yellow', 'Pácora', 5, 1);
+insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID) values (6, 'Babbleset', 'Crimson', 'Zhoutou', 6, 1);
