@@ -76,7 +76,6 @@
         public function attempt_login($password, $email){
             $success = false;
             //! le mot de passe sera en hash
-            var_dump($password, $email);
             if (get_credentials_from_email($email)->get_password() == $password) {
                 $success = true;
             }
@@ -94,12 +93,10 @@
                 return true;
             }
             catch(PDOException $e){
-                var_dump($e);
-                return false;
+                return $e->errorInfo;
             }
             catch(Exception $e){
-                var_dump(["secondException"=>$e]);
-                return false;
+                return $e->errorInfo;
             }
         }
     }

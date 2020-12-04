@@ -76,7 +76,7 @@ BEGIN
         RESIGNAL;  
     END;
     START TRANSACTION;
-    IF(SELECT COUNT(email) FROM tbl_Teams WHERE email = in_email) != 0 THEN
+    IF((SELECT COUNT(email) FROM tbl_Teams WHERE email = in_email) <> 0) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Email not Unique', MYSQL_ERRNO = 1;
     ELSEIF
 	(SELECT COUNT(name) FROM tbl_Teams WHERE name = in_name) != 0 THEN

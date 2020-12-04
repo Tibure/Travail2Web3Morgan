@@ -11,10 +11,11 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Accueil<span class="sr-only">(current)</span></a>
       </li>   
-    </ul>
-    <?php
+      <?php
     require_once(PATH_MODELS."/teamModel.php");
-        if($_SESSION["login"] == true){
+    try {
+
+        if(isset($_SESSION["login"]) && $_SESSION["login"] == true){
           $teamModel = new TeamModel();
           $userValues = $teamModel->get_credentials_from_email($_SESSION["current_user"]);
           echo("<li class=\"nav-item\">
@@ -27,16 +28,20 @@
           <a class=\"nav-link\" href=\"/manageGame/show\">Gestion des énigmes<span class=\"sr-only\">(current)</span></a>
           </li>");
 
-          echo("Logged in as: ".$userValues["name"]);
+          echo("­<span>Logged in as: ".$userValues["name"]."</span>");
         }else{
           echo("<li class=\"nav-item\">
-            <a class=\"nav-link\" href=\"/connection/show\">Log in<span class=\"sr-only\">(current)</span></a>
-          </li>");
-          echo("<li class=\"nav-item\">
-            <a class=\"nav-link\" href=\"/inscription/show\" >Sign In<span class=\"sr-only\">(current)</span></a>
-          </li>");
+          <a class=\"nav-link\" href=\"/connection/show\">Log in<span class=\"sr-only\">(current)</span></a>
+        </li>");
+        echo("<li class=\"nav-item\">
+          <a class=\"nav-link\" href=\"/inscription/show\">Sign In<span class=\"sr-only\">(current)</span></a>
+        </li>");
+        }
+      }catch(Exception $e) {
+          
         }
       ?>
+    </ul­>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
       </li>
