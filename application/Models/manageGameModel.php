@@ -46,36 +46,34 @@
         public function add_puzzle($title, $question, $answer, $hint, $active, $image){
             $pdo = $this->get_pdo_instance();
             $procedure = $pdo->prepare("Call ".self::ADD_PUZZLE_PROC_NAME.
-            "(:title, :question, :answer, :hint, :active, :image)");
+            "(:inTitle, :inQuestion, :inAnswer, :inHint, :inActive, :inImage)");
             $procedure->execute([
-                 'title' => $title,
-                 'question' => $question,
-                 'answer' => $answer,
-                 'hint' => $hint,
-                 'active' => $active,
-                 'image' => $image
+                 'inTitle' => $title,
+                 'inQuestion' => $question,
+                 'inAnswer' => $answer,
+                 'inHint' => $hint,
+                 'inActive' => $active,
+                 'inImage' => $image
             ]);
         }
 
         public function modify_puzzle($id_puzzle, $title, $question, $answer, $hint, $active, $image){
             $pdo = $this->get_pdo_instance();
-            $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_PROC_NAME.
-            "(:id_puzzle, :title, :question, :answer,:hint, :active, :image)");
+            $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_PROC_NAME."(:inPuzzle_ID, :inTitle, :inQuestion, :inAnswer,:inHint, :inActive, :inImage)");
             $procedure->execute([
-                'id_puzzle' => $id_puzzle,
-                 'title' => $title,
-                 'question' => $question,
-                 'answer' => $answer,
-                 'hint' => $hint,
-                 'active' => $active,
-                 'image' => $image
+                'inPuzzle_ID' => $id_puzzle,
+                 'inTitle' => $title,
+                 'inQuestion' => $question,
+                 'inAnswer' => $answer,
+                 'inHint' => $hint,
+                 'inActive' => $active,
+                 'inImage' => $image
             ]);
         }
 
         public function modify_puzzle_order($puzzle){
             $pdo = $this->get_pdo_instance();
-            $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER.
-            "(:id_puzzle, :new_order)");
+            $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER."(:id_puzzle, :new_order)");
             $procedure->execute([
                 'id_puzzle' => $puzzle['id_puzzle'],
                 'new_order' => $puzzle['puzzle_order']

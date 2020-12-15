@@ -10,7 +10,9 @@
     -->
     <?php
         if($message != "")
-        echo("<h3>".$message."</h3>");
+        {
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
     ?>
     <div class="form-group">
     <label for="PuzzleSelect">Choisissez l'énigme à modifier</label>
@@ -122,10 +124,10 @@
         </div>
 
         <div class="input-group mb-3">
-            <button type ="button" class="btn btn-success "style="margin-right:10px">Gerer ordre generale</button>
-            <button type="submit" class="btn btn-success " formaction="/manageGame/add_puzzle" style="margin-right:10px">Ajouter</button>
-            <button type="submit" class="btn btn-primary " formaction="/manageGame/save_puzzle" style="margin-right:10px">Sauvegarder</button>
-            <button type="submit" class="btn btn-danger "  formaction="/manageGame/delete_puzzle"style="margin-right:10px">Supprimer</button>
+            <button type ="button" class="btn btn-success" id="btn_ordre" style="margin-right:10px">Gerer ordre generale</button>
+            <button type="submit" class="btn btn-success" id="btn_add" formaction="/manageGame/add_puzzle" style="margin-right:10px">Ajouter</button>
+            <button disabled="false" type="submit" class="btn btn-primary" id="btn_save" formaction="/manageGame/save_puzzle" style="margin-right:10px">Sauvegarder</button>
+            <button disabled="false" type="submit" class="btn btn-danger"  id="btn_delete" formaction="/manageGame/delete_puzzle"style="margin-right:10px">Supprimer</button>
         </div>
     </div>
 </form>

@@ -56,6 +56,7 @@ CREATE DEFINER=root@localhost PROCEDURE get_team_credentials_from_email(
 )
 BEGIN
     SELECT name,
+    password,
     game_master
   FROM tbl_Teams WHERE email = in_email limit 1;
 END;;
@@ -148,11 +149,10 @@ CREATE PROCEDURE `modify_puzzle`(
         inQuestion        nvarchar (50),
         inAnswer          nvarchar (50),
         inHint			  nvarchar (50),
-        inActive			boolean,
-		inImage			nvarchar(50)
+        inActive		  boolean,
+		inImage			  nvarchar(50)
 )
 BEGIN
-    
     UPDATE tbl_Puzzle
     SET
         title       =   inTitle,
@@ -242,9 +242,8 @@ insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (5, 'Brainbox', 'Yellow', 'Pácora', 5, 1,1,'allo');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (6, 'Babbleset', 'Crimson', 'Zhoutou', 6, 1,1,'allo');
 
-
-insert into tbl_teams (name,current_puzzle_ID,game_ID,email,password,game_master,last_answer_sent) values ('Jordan',null,1,'jordan@email.com','123',true,null);
-insert into tbl_teams (name,current_puzzle_ID,game_ID,email,password,game_master,last_answer_sent) values ('emile',null,1,'emile@email.com','123',false,null);
+insert into tbl_teams (name,current_puzzle_ID,game_ID,email,password,game_master,last_answer_sent) values ('admin',null,1,'admin@email.com','$2y$10$FXBxTp/sI5UNAsTjXzkWG.uc8EFH4.qKdtrTBd.URXEtQRgG.2D1G',true,null);
+insert into tbl_teams (name,current_puzzle_ID,game_ID,email,password,game_master,last_answer_sent) values ('player',null,1,'player@email.com','$2y$10$2QQJXXBCie32AQQ8wyh7KuILMMW2wPwOqZFj7RUW5Z/GOA6uH/r9e',false,null);
 
 insert into tbl_file(name) value('image1.jpg');
 insert into tbl_file(name) value('image2.jpg');

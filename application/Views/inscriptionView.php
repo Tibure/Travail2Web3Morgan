@@ -39,8 +39,7 @@ echo('<script type="text/javascript" src="\public\js\inscription.js"></script>')
          <p>Congrats! you succesfully made an account!</p>
      </div>
      <div class="modal-footer">
-         <button type="submit" class="btn btn-white" >I don't care, but let me in</button>
-         <button type="submit" class="btn btn-primary" >Great! Now let me in</button>
+         <button type="submit" class="btn btn-white" >OK</button>
      </div>
    </div>
   </div>

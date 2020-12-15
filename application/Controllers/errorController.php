@@ -10,10 +10,9 @@
             
         }
 
-        public function show(){
+        public function show($message = ""){
             $view = new View("errorView.php");
-            $data = array();
-            
+            $data = array("message"=>$message);
             $content = $view->render($data);
             echo $this->render_template_with_content(self::ERROR_TITLE, $content);
         }

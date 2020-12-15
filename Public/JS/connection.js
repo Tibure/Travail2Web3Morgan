@@ -16,7 +16,7 @@ $(document).ready(function(){
             $("#connectionForm").submit();
            }
            else{
-             
+            alert('Email ou mot de passe incorrecte');
            }
         });
         });
