@@ -6,6 +6,7 @@ $(window).on('load', function () {
 $(document).ready(function () {
     $("#PuzzleSelect").on("change", function () {
         const selected_puzzle = $("#PuzzleSelect option:selected").val();
+        $("#puzzleID").val(selected_puzzle);
         if (selected_puzzle != 0)
             Get_puzzle(selected_puzzle);
     });
@@ -35,9 +36,7 @@ function Show_image(selected_image){
     $.ajax({
         url: "/manageGame/show_image",
         method: "POST",
-        data: JSON.stringify({
-            name: selected_image
-        }),
+        data: {'name' : selected_image},
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     }).then((data) => {
@@ -69,6 +68,8 @@ function Get_all_files(){
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     }).then((data) => {
+        $('#selectImage').append($("<option value=\"0\">Aucune image</option>"));
+
         data.forEach(element => {
             $('#selectImage').append($("<option>", {
                 value: element.id_file,

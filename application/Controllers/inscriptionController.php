@@ -2,6 +2,7 @@
     require_once(PATH_SERVICE."/authenticationService.php");
     require_once(PATH_CORE."/controller.php");
     require_once(PATH_MODELS."/teamModel.php");
+    require_once(PATH_SERVICE."/fileService.php");
 
     class InscriptionController extends Controller{
         

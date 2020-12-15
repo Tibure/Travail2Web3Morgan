@@ -6,11 +6,14 @@
     {
         const DELETE_PUZZLE_BY_ID_PROC_NAME = "delete_puzzle_by_id";
         const MODIFY_PUZZLE_PROC_NAME = "modify_puzzle";
+        const MODIFY_PUZZLE_ORDER = "modify_puzzle_order";
+
         const ADD_PUZZLE_PROC_NAME = "add_puzzle";
         const GET_ALL_PUZZLE_PROC_NAME = "get_all_puzzle";
         const GET_PUZZLE_BY_ID_PROC_NAME = "get_puzzle_by_id";
         const GET_ALL_FILES_PROC_NAME = "get_all_files";
         const GET_FILE_BY_ID_PROC_NAME = "get_file_by_id";
+
 
         public function get_all_puzzles(){
             $pdo = $this->get_pdo_instance();
@@ -40,36 +43,42 @@
            ]);
         }
 
-        public function add_puzzle($title, $question, $answer, $puzzle_order, $game_ID, $active, $image){
+        public function add_puzzle($title, $question, $answer, $hint, $active, $image){
             $pdo = $this->get_pdo_instance();
             $procedure = $pdo->prepare("Call ".self::ADD_PUZZLE_PROC_NAME.
-            "(:title, :question, :answer, :hint, :puzzle_order, :game_ID, :active, :image)");
+            "(:title, :question, :answer, :hint, :active, :image)");
             $procedure->execute([
                  'title' => $title,
                  'question' => $question,
                  'answer' => $answer,
                  'hint' => $hint,
-                 'puzzle_order' => $puzzle_order,
-                 'game_ID' => $game_ID,
                  'active' => $active,
                  'image' => $image
             ]);
         }
 
-        public function modify_puzzle($id_puzzle, $title, $question, $answer, $puzzle_order, $game_ID, $active, $image){
+        public function modify_puzzle($id_puzzle, $title, $question, $answer, $hint, $active, $image){
             $pdo = $this->get_pdo_instance();
             $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_PROC_NAME.
-            "(:id_puzzle, :title, :question, :answer,:hint, :puzzle_order, :game_ID, :active, :image)");
+            "(:id_puzzle, :title, :question, :answer,:hint, :active, :image)");
             $procedure->execute([
                 'id_puzzle' => $id_puzzle,
                  'title' => $title,
                  'question' => $question,
                  'answer' => $answer,
                  'hint' => $hint,
-                 'puzzle_order' => $puzzle_order,
-                 'game_ID' => $game_ID,
                  'active' => $active,
                  'image' => $image
+            ]);
+        }
+
+        public function modify_puzzle_order($puzzle){
+            $pdo = $this->get_pdo_instance();
+            $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER.
+            "(:id_puzzle, :new_order)");
+            $procedure->execute([
+                'id_puzzle' => $puzzle['id_puzzle'],
+                'new_order' => $puzzle['puzzle_order']
             ]);
         }
 
@@ -92,6 +101,7 @@
            $le_file = $procedure->fetchAll();
            return $le_file;
         }
+        
 
     }
   

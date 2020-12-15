@@ -30,7 +30,7 @@ CREATE TABLE tbl_Puzzle(
         puzzle_order     Int NOT NULL UNIQUE,
         game_ID          Int NOT NULL,
         active 			boolean NOT NULL,
-        image			nvarchar(50) NOT NULL
+        image			nvarchar(50)
 	,CONSTRAINT tbl_Puzzle_PK PRIMARY KEY (puzzle_ID)
 	,CONSTRAINT tbl_Puzzle_tbl_Game_FK FOREIGN KEY (game_ID) REFERENCES tbl_Game(game_ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -126,15 +126,17 @@ CREATE PROCEDURE `add_puzzle`(
         inQuestion        nvarchar (50),
         inAnswer          nvarchar (50),
         inHint			  nvarchar (50),
-        inPuzzle_order     Int,
-        inGame_ID          Int,
         inActive			boolean,
 		inImage			nvarchar(50)
 )
 BEGIN
-    
+
+    DECLARE max_puzzle_order int;
+    DECLARE latest_game_id int;
+    SET max_puzzle_order = (SELECT MAX(puzzle_order)+1 AS puzzle_order FROM tbl_Puzzle);
+    SET latest_game_id = (SELECT MAX(game_ID) as game_ID FROM tbl_Puzzle);
     INSERT INTO tbl_Puzzle(title, question, answer, hint, puzzle_order, game_ID, active, image)
-			VALUES(inTitle, inQuestion, inAnswer, inHint, inPuzzle_order, inGame_ID, inActive, inImage);
+			VALUES(inTitle, inQuestion, inAnswer, inHint, max_puzzle_order , latest_game_id, inActive, inImage);
 END;;
 DELIMITER ;;
 
@@ -146,8 +148,6 @@ CREATE PROCEDURE `modify_puzzle`(
         inQuestion        nvarchar (50),
         inAnswer          nvarchar (50),
         inHint			  nvarchar (50),
-        inPuzzle_order     Int,
-        inGame_ID          Int,
         inActive			boolean,
 		inImage			nvarchar(50)
 )
@@ -159,8 +159,6 @@ BEGIN
         question    =  	inQuestion,
         answer      = 	inAnswer ,
         hint		=	inHint ,
-        puzzle_order = 	inPuzzle_order,
-        game_ID     =   inGame_ID ,
         active		=	inActive,
 		image		=	inImage
 	WHERE
@@ -171,7 +169,7 @@ DROP PROCEDURE IF EXISTS `get_all_puzzle`;
 DELIMITER ;;
 	CREATE PROCEDURE get_all_puzzle()
     BEGIN
-		SELECT puzzle_ID, title, question, answer, hint, puzzle_order, game_ID, active, image FROM tbl_Puzzle;
+		SELECT puzzle_ID, title, question, answer, hint, puzzle_order ,game_ID, active, image FROM tbl_Puzzle;
     END;;
 DELIMITER ;
 
@@ -208,6 +206,32 @@ DELIMITER ;;
         WHERE
 			id_file = in_id_file;
     END;;
+DELIMITER ;;
+
+
+DROP PROCEDURE IF EXISTS `modify_puzzle_order`
+DELIMITER ;;
+	CREATE PROCEDURE modify_puzzle_order(
+    id_puzzle INT,
+    new_order INT
+    )
+    BEGIN
+	 DECLARE old_order int;
+     START TRANSACTION;
+	
+    IF((SELECT Count(puzzle_order) FROM tbl_puzzle WHERE puzzle_order = new_order) <> 0) THEN
+		SET old_order = (SELECT puzzle_order FROM tbl_puzzle WHERE puzzle_ID = id_puzzle);
+		UPDATE tbl_puzzle SET puzzle_order = (select MAX(puzzle_order)+1 from tbl_puzzle) WHERE puzzle_order = new_order;
+        UPDATE tbl_puzzle SET puzzle_order = new_order WHERE puzzle_ID = id_puzzle;
+        UPDATE tbl_puzzle SET puzzle_order = old_order WHERE puzzle_order = (select MAX(puzzle_order) from tbl_puzzle);
+    ELSE
+		UPDATE tbl_puzzle SET puzzle_order = new_order WHERE puzzle_ID = id_puzzle;
+	END IF;
+    COMMIT;
+	END;;
+DELIMITER ;;
+
+DROP PROCEDURE IF EXISTS `take_out_puzzle_order`
 DELIMITER ;;
 
 insert into tbl_Game (game_ID, start_time) values (1, now());

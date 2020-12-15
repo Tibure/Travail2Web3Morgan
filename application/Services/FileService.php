@@ -103,7 +103,7 @@
             $file = PATH_FILES."/".$file_name;
 
             if (file_exists($file)) {
-                /*header('Content-Description: File Transfer');
+                header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
                 header('Content-Disposition: attachment; filename="'.basename($file).'"');
                 header('Expires: 0');
@@ -111,13 +111,7 @@
                 header('Pragma: public');
                 header('Content-Length: ' . filesize($file));
                 readfile($file);
-                */
-                return $file;
-            }
-            else {
-                return false;
-            }
-               
+            };               
         }
 
         public function get_upload_file_name()

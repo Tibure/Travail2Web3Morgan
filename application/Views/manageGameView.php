@@ -8,7 +8,10 @@
             <a href="?=NewPuzzle" class="list-group-item list-group-item-action active">Ajouter une énigme</a>
     </div>
     -->
-
+    <?php
+        if($message != "")
+        echo("<h3>".$message."</h3>");
+    ?>
     <div class="form-group">
     <label for="PuzzleSelect">Choisissez l'énigme à modifier</label>
     <select class="form-control" id="PuzzleSelect">
@@ -22,7 +25,7 @@
             <span class="input-group-text" id="newImage">Téléversez une nouvelle image : </span>
         </div>
     </div>
-    <form action="/file/addFile" id="add_file" method="post" novalidate class="needs-validation"
+    <form action="/file/addFile" id="add_file" method="POST" novalidate class="needs-validation"
         enctype="multipart/form-data">
         <div class="form-group align-middle ">
             <div class="custom-file">
@@ -35,7 +38,7 @@
     </form>
 </div>
 <br>
-<form class="needs-validation" novalidate>
+<form class="needs-validation" method="POST" novalidate>
     <div class="container">
 
         <div class="input-group mb-3">
@@ -43,7 +46,7 @@
                 <span class="input-group-text" id="nom">Nom de l'énigme : </span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer un nom." aria-label="nom" aria-describedby="nom"
-                id="puzzleName"  REQUIRED>
+                id="puzzleName"  name="puzzleName" REQUIRED>
             <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
             </div>
@@ -54,7 +57,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="image">Image de l'énigme : </span>
             </div>
-            <select class="form-control" id="selectImage">
+            <select class="form-control" id="selectImage" name="selectImage">
                 
                 <!-- cick image 1 -> va trouver le path de l<image dans la base de donner
                     
@@ -62,10 +65,10 @@
                      il va falloir changer le content type de celui de file service pour adapter en image. kool
                      Pour toute question demander MOrgan KAtjounis du 01-->
             </select>
-            <img id="previewImagePuzzle" src="" width="500" height="600">
-            <div class="invalid-feedback">
+           <!--  <img id="previewImagePuzzle" src="" width="500" height="600"> -->
+           <!--  <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
-            </div>
+            </div> -->
         </div>
 
         <div class="input-group mb-3">
@@ -73,7 +76,7 @@
                 <span class="input-group-text" id="question">Question de l'énigme : </span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer une Question." aria-label="question"
-               id="puzzleQuestion" aria-describedby="question" REQUIRED>
+               id="puzzleQuestion" name="puzzleQuestion" aria-describedby="question" REQUIRED>
             <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
             </div>
@@ -84,10 +87,10 @@
                 <span class="input-group-text" id="indice">indice de l'énigme :</span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer un indice." aria-label="indice"
-            id="puzzleHint" aria-describedby="indice" REQUIRED>
-            <div class="invalid-feedback">
+            id="puzzleHint" name="puzzleHint" aria-describedby="indice" >
+           <!--  <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
-            </div>
+            </div> -->
         </div>
 
         <div class="input-group mb-3">
@@ -95,7 +98,7 @@
                 <span class="input-group-text" id="reponse">Réponse de l'énigme</span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer une réponse." aria-label="reponse"
-            id="puzzleAnswer" aria-describedby="reponse" REQUIRED>
+            id="puzzleAnswer" name="puzzleAnswer" aria-describedby="reponse" REQUIRED>
             <div class="invalid-feedback">
                 Le champ ne peux pas être vide.
             </div>
@@ -111,17 +114,18 @@
                 Le champ ne peux pas être vide.
             </div>
         </div>
--->
+-->     <input type="text" name="puzzleID" id="puzzleID" value="-1" hidden>
 
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="puzzleActive">
+            <input type="checkbox" class="form-check-input" id="puzzleActive" name="puzzleActive">
             <label class="form-check-label" for="enablePuzzle">Énigme active </label>
         </div>
 
         <div class="input-group mb-3">
-            <button type="submit" class="btn btn-success " style="margin-right:10px">Ajouter</button>
-            <button type="submit" class="btn btn-primary " style="margin-right:10px">Sauvegarder</button>
-            <button type="submit" class="btn btn-danger " style="margin-right:10px">Supprimer</button>
+            <button type ="button" class="btn btn-success "style="margin-right:10px">Gerer ordre generale</button>
+            <button type="submit" class="btn btn-success " formaction="/manageGame/add_puzzle" style="margin-right:10px">Ajouter</button>
+            <button type="submit" class="btn btn-primary " formaction="/manageGame/save_puzzle" style="margin-right:10px">Sauvegarder</button>
+            <button type="submit" class="btn btn-danger "  formaction="/manageGame/delete_puzzle"style="margin-right:10px">Supprimer</button>
         </div>
     </div>
 </form>

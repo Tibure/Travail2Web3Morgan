@@ -13,10 +13,9 @@
             $this->manageGame = new ManageGameModel();
         }
 
-        public function show(){
+        public function show($message = ""){
             $view = new View("manageGameView.php");
-            $data = array();
-            
+            $data = array("message"=>$message);
             $content = $view->render($data);
             echo $this->render_template_with_content(self::MANAGEGAME_TITLE, $content);
         }
@@ -45,9 +44,64 @@
         }
         
         public function show_image(){
-            $file_name = $_POST['name'];
-            $file = FileService::retreive_file($file_name);
-            echo(json_encode($file));
+            /* $file_name = $_POST['name'];
+            $file = FileService::get_instance()->retreive_file($file_name);
+            echo(json_encode($file)); */
         }
+
+        public function add_puzzle(){
+            $puzzle_name = $_POST['puzzleName'];
+            $selectImage = $_POST['selectImage'];
+            $puzzleQuestion = $_POST['puzzleQuestion'];
+            $puzzleHint = $_POST['puzzleHint'];
+            $puzzleAnswer = $_POST['puzzleAnswer'];
+            $puzzleActive = $_POST['puzzleActive'] === "on" ? 1 : 0;
+            var_dump($_POST);
+           //MANQUE PUZZLE ORDER
+            try{
+                $this->manageGame->add_puzzle($puzzle_name, $puzzleQuestion, $puzzleAnswer, $puzzleHint, $puzzleActive, $selectImage);
+                $message = "Enigme ajouté!";
+                $this->show($message);
+            }catch(Exception $e){
+                echo($e);
+            }
+            
+        }
+        public function save_puzzle(){
+            $puzzle_name = $_POST['puzzleName'];
+            $selectImage = $_POST['selectImage'];
+            $puzzleQuestion = $_POST['puzzleQuestion'];
+            $puzzleHint = $_POST['puzzleHint'];
+            $puzzleAnswer = $_POST['puzzleAnswer'];
+            $puzzleActive = $_POST['puzzleActive'] === "on" ? 1: 0;
+            $puzzleId = $_POST['puzzleID'];
+            // MANQUE PUZZLE ORDER
+
+            try{
+                $this->manageGame->modify_puzzle($puzzleId, $puzzle_name, $puzzleQuestion, $puzzleAnswer, $puzzleHint, $puzzleActive, $selectImage);
+                $message = "Enigme modifié!";
+                $this->show($message);
+            }catch(Exception $e){
+                echo($e);
+            }
+        }
+
+        public function delete_puzzle(){
+            $puzzleId = $_POST['puzzleID'];
+            try{
+                $this->manageGame->delete_a_puzzle($puzzleId);
+                $message = "Enigme supprimé!";
+                $this->show($message);
+            }catch(Exception $e){
+                echo($e);
+            }
+            
+        }
+
+        public function modify_puzzle_order(){
+            $Puzzle = $_POST['puzzle'];
+            $this->manageGame->modify_puzzle_order($puzzle);
+        }
+
     }
 ?>
