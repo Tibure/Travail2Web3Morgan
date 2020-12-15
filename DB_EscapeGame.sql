@@ -189,6 +189,27 @@ DELIMITER ;;
     END;;
 DELIMITER ;;
 
+DROP PROCEDURE IF EXISTS `get_all_files`;
+DELIMITER ;;
+	CREATE PROCEDURE get_all_files()
+    BEGIN
+		SELECT id_file,name FROM tbl_file;
+    END;;
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS `get_file_by_id`;
+DELIMITER ;;
+	CREATE PROCEDURE get_file_by_id(
+			in_id_file INT
+    )
+    BEGIN
+		SELECT id_file,name FROM tbl_file
+        WHERE
+			id_file = in_id_file;
+    END;;
+DELIMITER ;;
+
 insert into tbl_Game (game_ID, start_time) values (1, now());
 insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (1, 'Skivee', 'Fuscia', 'Claremorris','jo', 1, 1,0,'image1.jpg');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (2, 'Skibox', 'Aquamarine', 'Hualin','morg', 2, 1,1,'image2.jpg');
@@ -196,3 +217,11 @@ insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (4, 'Edgeblab', 'Orange', 'Ruda Śląska', 4, 1,1,'allo');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (5, 'Brainbox', 'Yellow', 'Pácora', 5, 1,1,'allo');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (6, 'Babbleset', 'Crimson', 'Zhoutou', 6, 1,1,'allo');
+
+
+insert into tbl_teams (name,current_puzzle_ID,game_ID,email,password,game_master,last_answer_sent) values ('Jordan',null,1,'jordan@email.com','123',true,null);
+insert into tbl_teams (name,current_puzzle_ID,game_ID,email,password,game_master,last_answer_sent) values ('emile',null,1,'emile@email.com','123',false,null);
+
+insert into tbl_file(name) value('image1.jpg');
+insert into tbl_file(name) value('image2.jpg');
+insert into tbl_file(name) value('image3.jpg');

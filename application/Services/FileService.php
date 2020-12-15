@@ -21,13 +21,15 @@
 
         public function add_file()
         {
-            var_dump($_FILES['file']);
+           // var_dump($_FILES['file']);
             $uploadfile = PATH_FILES . "/" . basename($_FILES['file']['name']);
  
             echo '<pre>';
             if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) 
             {
+                ///ajouter une page de validation ou un msg bravo ca fonctionne
                 echo "File is valid, and was successfully uploaded.\n";
+                header("location:/manageGame/show");
             } else 
             {
                 echo "Possible file upload attack!\n";
@@ -101,7 +103,7 @@
             $file = PATH_FILES."/".$file_name;
 
             if (file_exists($file)) {
-                header('Content-Description: File Transfer');
+                /*header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
                 header('Content-Disposition: attachment; filename="'.basename($file).'"');
                 header('Expires: 0');
@@ -109,7 +111,13 @@
                 header('Pragma: public');
                 header('Content-Length: ' . filesize($file));
                 readfile($file);
-            }   
+                */
+                return $file;
+            }
+            else {
+                return false;
+            }
+               
         }
 
         public function get_upload_file_name()

@@ -4,9 +4,10 @@ document.querySelector('.custom-file-input').addEventListener('change', function
     nextSibling.innerText = fileName
   })
 
-  function SelectedImagePuzzle(){
+  /*function SelectedImagePuzzle(){
+    console.log("selected change");
     newImage = document.getElementById("selectImage").value;
     document.getElementById("previewImagePuzzle").src = "/files/"+newImage+".jpg";
   }
-
+*/
   

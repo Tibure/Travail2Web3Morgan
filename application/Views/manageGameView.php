@@ -54,10 +54,8 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="image">Image de l'énigme : </span>
             </div>
-            <select class="form-control" id="selectImage" onchange="SelectedImagePuzzle()">
-                <option>image1</option>
-                <option>image2</option>
-                <option>image3</option>
+            <select class="form-control" id="selectImage">
+                
                 <!-- cick image 1 -> va trouver le path de l<image dans la base de donner
                     
                     dans file controller(va regarder si la session est game master) un truc retreivefile() qui appel celui de file service.
