@@ -1,1 +1,6 @@
-<h3>Impossible d'accèder à la base de données, veuillez réessayer plus tard.</h3>
+<?php
+    if($message != "")
+    {
+        echo("<h3>".$message."</h3>");
+    }
+?>

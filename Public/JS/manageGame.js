@@ -10,12 +10,28 @@ $(document).ready(function () {
         const selected_puzzle = $("#PuzzleSelect option:selected").val();
         $("#puzzleID").val(selected_puzzle);
         if (selected_puzzle != 0)
+        {   
+            $("#btn_add").attr("disabled", true);
+            $("#btn_delete").attr("disabled", false);
+            $("#btn_save").attr("disabled", false);
             Get_puzzle(selected_puzzle);
+        }
+        else
+        {
+            $("#btn_add").attr("disabled", false);
+            $("#btn_delete").attr("disabled", true);
+            $("#btn_save").attr("disabled", true);
+            $("input.form-control:text").val("");
+            $("#selectImage").prop("selectedIndex", 0);
+            $("#puzzleActive").prop("checked", 0);
+        }     
     });
     $("#selectImage").on("change", function () {
         const selected_image = $("#selectImage option:selected").text();
         if (selected_image != 0)
+        {
             Show_image(selected_image);
+        }
     });
 
     $("#managerOrder").on("click", function() {
@@ -87,7 +103,7 @@ function Get_puzzle(selected_puzzle){
         $("#puzzleQuestion").val(data[0].question);
         $("#puzzleHint").val(data[0].hint);
         $("#puzzleAnswer").val(data[0].answer);
-        $("#puzzleActive").attr("checked",data[0].active == 1);
+        $("#puzzleActive").prop("checked",data[0].active == 1);
     });
 }
 function Show_image(selected_image){

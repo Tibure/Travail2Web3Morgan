@@ -28,17 +28,20 @@
 
         public function verifyLogin($email, $password)
         {   
-            if ($this->attempt_login($password, $email)) {
+            if ($this->attempt_login($password, $email)) 
+            {
                 $_SESSION["login"] = true;
                 $_SESSION["current_user"] = $email;
             }
-            else {
+            else 
+            {
                 $_SESSION["login"] = false;
                 $_SESSION["current_user"] = null;
             }
-            return $_SESSION["login"];
+            echo(json_encode($_SESSION["login"]));
         }
-        public function logoff()
+        
+        public static function logoff()
         {
             $_SESSION["login"] = false;
             $_SESSION = array();
@@ -62,19 +65,15 @@
 
         public function is_logged_in()
         {
-            //PAS FINI
             if(isset($_SESSION["login"]))
             {
-                return true;
+                return $_SESSION["login"];
             }
-            return false;
         }
 
-        public function attempt_login($password, $email){
-            return true;
-            //hashPassword
-            //vaChercher dans BD
-            //comparer
+        public function attempt_login($password, $email)
+        {
+            return password_verify($password, $this->team_model->get_credentials_from_email($email)["password"]);
         }
     }
 ?>

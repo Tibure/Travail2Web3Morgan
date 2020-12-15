@@ -2,6 +2,7 @@
 
     require_once(PATH_CORE."/controller.php");
     require_once(PATH_MODELS."/manageGameModel.php");
+    require_once(PATH_MODELS."/teamModel.php");
 
     class ManageGameController extends Controller{
         
@@ -13,11 +14,24 @@
             $this->manageGame = new ManageGameModel();
         }
 
-        public function show($message = ""){
-            $view = new View("manageGameView.php");
+        public function show($message = "")
+        {
+            $teamModel = new TeamModel();
+            $userValues = $teamModel->get_credentials_from_email($_SESSION["current_user"]);
+            if($userValues["game_master"] == 0)
+            {
+                $message = "Vous n'avez pas l'autorisation de naviguer sur cette page";
+                $view = new View("errorView.php");
+                $title = "Une erreur est survenue";
+            }
+            else
+            {
+                $view = new View("manageGameView.php");
+                $title = self::MANAGEGAME_TITLE;
+            }
             $data = array("message"=>$message);
             $content = $view->render($data);
-            echo $this->render_template_with_content(self::MANAGEGAME_TITLE, $content);
+            echo $this->render_template_with_content($title, $content);
         }
 
 
@@ -39,7 +53,7 @@
         }
 
         public function get_file($id_file){
-            $file = $this->manageGame->get_a_files($id_file);
+            $file = $this->manageGame->get_a_file($id_file);
             echo(json_encode($file)) ;
         }
         
@@ -55,9 +69,7 @@
             $puzzleQuestion = $_POST['puzzleQuestion'];
             $puzzleHint = $_POST['puzzleHint'];
             $puzzleAnswer = $_POST['puzzleAnswer'];
-            $puzzleActive = $_POST['puzzleActive'] === "on" ? 1 : 0;
-            var_dump($_POST);
-           //MANQUE PUZZLE ORDER
+            $puzzleActive = isset($_POST['puzzleActive']) ? 1: 0;
             try{
                 $this->manageGame->add_puzzle($puzzle_name, $puzzleQuestion, $puzzleAnswer, $puzzleHint, $puzzleActive, $selectImage);
                 $message = "Enigme ajouté!";
@@ -73,10 +85,8 @@
             $puzzleQuestion = $_POST['puzzleQuestion'];
             $puzzleHint = $_POST['puzzleHint'];
             $puzzleAnswer = $_POST['puzzleAnswer'];
-            $puzzleActive = $_POST['puzzleActive'] === "on" ? 1: 0;
+            $puzzleActive = isset($_POST['puzzleActive']) ? 1: 0;
             $puzzleId = $_POST['puzzleID'];
-            // MANQUE PUZZLE ORDER
-
             try{
                 $this->manageGame->modify_puzzle($puzzleId, $puzzle_name, $puzzleQuestion, $puzzleAnswer, $puzzleHint, $puzzleActive, $selectImage);
                 $message = "Enigme modifié!";

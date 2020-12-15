@@ -14,9 +14,9 @@ $(document).ready(function(){
         data: {'email': email, 'password': password, 'username': username}
     })
     .then(function(response){
-       console.log(response);
         if(response.isValid === true){
             $("#signedUpModal").modal('show')
+
        }
        else{
             if(response.isValid != null && response.errorMessage != null && response.inputID){
@@ -25,7 +25,7 @@ $(document).ready(function(){
             $("#"+response.inputID).attr("title", response.errorMessage); 
             }
             else{
-                alert("unknown error, please notify our support team (Err#1)");
+                alert("Inscription impossible");
             }
          }
        

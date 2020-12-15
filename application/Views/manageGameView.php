@@ -10,7 +10,9 @@
     -->
     <?php
         if($message != "")
-        echo("<h3>".$message."</h3>");
+        {
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
     ?>
     <div class="form-group">
     <label for="PuzzleSelect">Choisissez l'énigme à modifier</label>

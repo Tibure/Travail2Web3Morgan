@@ -64,22 +64,13 @@
                 $pdo = $this->get_pdo_instance();
                 $statementHandle = $pdo->prepare("CALL ".self::GET_TEAM_CREDENTIALS_FROM_PROC_NAME."(:in_email)");
                 $statementHandle->execute(["in_email"=>$email]);
-                $team = $statementHandle->fetch(PDO::FETCH_ASSOC);
+                $team = $statementHandle->fetch();
                 return $team;
             }
             catch(PDOException $e){
                 throw new NoteamFoundException();
             }
             
-        }
-
-        public function attempt_login($password, $email){
-            $success = false;
-            //! le mot de passe sera en hash
-            if (get_credentials_from_email($email)->get_password() == $password) {
-                $success = true;
-            }
-            return $success;
         }
 
         public function add_team($email, $name, $password){
