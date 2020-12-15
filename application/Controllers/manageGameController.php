@@ -99,8 +99,14 @@
         }
 
         public function modify_puzzle_order(){
-            $Puzzle = $_POST['puzzle'];
-            $this->manageGame->modify_puzzle_order($puzzle);
+            try{
+                $puzzlesOrder = $_POST['puzzlesOrder'];
+                $this->manageGame->modify_puzzle_order($puzzlesOrder);
+                echo(json_encode(true));
+            }catch(Exception $e){
+                var_dump($e);
+            }
+            
         }
 
     }
