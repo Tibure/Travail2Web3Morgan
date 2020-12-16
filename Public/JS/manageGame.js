@@ -84,6 +84,7 @@ $(document).ready(function () {
         .then(function(isValid){
             if(isValid){
                 alert("L'ordre a été sauvegarder correctement");
+                Get_all_puzzles();
             }else{
                 alert("L'ordre n'a pas pu sauvegarder correcterment, réessayez.");
             }
@@ -113,6 +114,7 @@ function Get_all_puzzles(){
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     }).then((data) => {
+        $('#PuzzleSelect').empty();
         $('#PuzzleSelect').append($("<option value=\"0\">Ajouter une nouvelle énigme</option>"));
         data.forEach(element => {
             $('#PuzzleSelect').append($("<option>", {

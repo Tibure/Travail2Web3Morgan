@@ -171,7 +171,7 @@ DROP PROCEDURE IF EXISTS `get_all_puzzle`;
 DELIMITER ;;
 	CREATE PROCEDURE get_all_puzzle()
     BEGIN
-		SELECT puzzle_ID, title, question, answer, hint, puzzle_order ,game_ID, active, image FROM tbl_Puzzle;
+		SELECT puzzle_ID, title, question, answer, hint, puzzle_order ,game_ID, active, image FROM tbl_Puzzle order by puzzle_order;
     END;;
 DELIMITER ;
 
