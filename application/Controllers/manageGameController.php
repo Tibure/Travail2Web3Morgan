@@ -79,7 +79,8 @@
             }
             
         }
-        public function save_puzzle(){
+        public function save_puzzle()
+        {
             $puzzle_name = $_POST['puzzleName'];
             $selectImage = $_POST['selectImage'];
             $puzzleQuestion = $_POST['puzzleQuestion'];
@@ -87,6 +88,10 @@
             $puzzleAnswer = $_POST['puzzleAnswer'];
             $puzzleActive = isset($_POST['puzzleActive']) ? 1: 0;
             $puzzleId = $_POST['puzzleID'];
+            if($puzzleActive == false)
+            {
+                
+            }
             try{
                 $this->manageGame->modify_puzzle($puzzleId, $puzzle_name, $puzzleQuestion, $puzzleAnswer, $puzzleHint, $puzzleActive, $selectImage);
                 $message = "Enigme modifié!";

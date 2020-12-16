@@ -12,17 +12,24 @@
       </li>
       <?php
     require_once(PATH_MODELS."/teamModel.php");
+    require_once(PATH_CONTROLLERS."/gameController.php");
     try {
           if(isset($_SESSION["login"]))
           {
             if($_SESSION["login"] == true)
             {
               $teamModel = new TeamModel();
+              $gameModel = new GameController();
+              $is_game_started = $gameModel->is_game_started();
               $userValues = $teamModel->get_credentials_from_email($_SESSION["current_user"]);
-              echo("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/game/show\">Rejoindre la partie<span class=\"sr-only\">(current)</span></a></li>");
+
+              if($is_game_started == true)
+              {
+                echo("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/game/show\">Rejoindre la partie<span class=\"sr-only\">(current)</span></a></li>");
+              }
               if($userValues["game_master"])
               {
-                echo("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/home/launchGame\">Démarrer une partie<span class=\"sr-only\">(current)</span></a></li>");
+                echo("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/game/start_game\">Démarrer une partie<span class=\"sr-only\">(current)</span></a></li>");
                 echo("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/manageGame/show\">Gestion des énigmes<span class=\"sr-only\">(current)</span></a></li>");
               }
               echo("</ul><ul class=\"navbar-nav justify-content-end\"> 

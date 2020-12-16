@@ -125,8 +125,8 @@
 
         <div class="input-group mb-3">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOrder" id="managerOrder" class="btn"style="margin-right:10px">Gerer ordre generale</button>
-            <button type="submit" class="btn btn-success" formaction="/manageGame/add_puzzle" style="margin-right:10px">Ajouter</button>
-            <button type="submit" class="btn btn-primary" formaction="/manageGame/save_puzzle" style="margin-right:10px">Sauvegarder</button>
+            <button type="submit" class="btn btn-success" id="btn_add" formaction="/manageGame/add_puzzle" style="margin-right:10px">Ajouter</button>
+            <button disabled="false" type="submit" class="btn btn-primary" id="btn_save" formaction="/manageGame/save_puzzle" style="margin-right:10px">Sauvegarder</button>
             <button disabled="false" type="submit" class="btn btn-danger"  id="btn_delete" onclick="return confirm('Êtes vous sur ?')" formaction="/manageGame/delete_puzzle"style="margin-right:10px">Supprimer</button>
         </div>
     </div>

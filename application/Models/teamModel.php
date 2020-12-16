@@ -11,8 +11,10 @@
         const GET_ALL_TEAMS_PROC_NAME = "get_all_teams";
         const GET_TEAM_BY_ID_PROC_NAME = "get_team_by_id";
         const GET_TEAM_CREDENTIALS_FROM_PROC_NAME = "get_team_credentials_from_email";
-        const GET_GAME_MASTER = "get_game_master";
-        const ADD_TEAM = "add_team";
+        const GET_GAME_MASTER_PROC_NAME = "get_game_master";
+        const ADD_TEAM_PROC_NAME = "add_team";
+        const GET_CURRENT_LEVEL_OF_TEAM_PROC_NAME = "get_current_level_of_teams";
+        const GET_NUMBER_PUZZLE_ACTIVE_PROC_NAME = "get_number_puzzle_active";
 
         public function get_all_teams():array{  
             /*
@@ -49,7 +51,7 @@
         public function get_game_master()//il y a seulement un game master
         {
             $pdo = $this->get_pdo_instance();
-            $statementHandle = $pdo->query("CALL ".self::GET_GAME_MASTER);
+            $statementHandle = $pdo->query("CALL ".self::GET_GAME_MASTER_PROC_NAME);
             $gameMaster = $statementHandle->fetchAll(PDO::FETCH_CLASS, 'TeamDTO');
             if($gameMaster === false)
             {
@@ -78,7 +80,7 @@
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
                 var_dump($passwordHash);
                 $pdo = $this->get_pdo_instance();
-                $statementHandle = $pdo->prepare("CALL ".self::ADD_TEAM."(:in_email, :in_name, :in_password, :in_game_master)");
+                $statementHandle = $pdo->prepare("CALL ".self::ADD_TEAM_PROC_NAME."(:in_email, :in_name, :in_password, :in_game_master)");
                 $statementHandle->execute([
                     "in_email"=>$email, "in_name"=>$name, "in_password"=>$passwordHash, "in_game_master"=>0
                 ]);
@@ -90,6 +92,32 @@
             catch(Exception $e){
                 return $e->errorInfo;
             }
+        }
+
+        public function get_current_level_of_teams()
+        {
+            try{
+                $pdo = $this->get_pdo_instance();
+                $statementHandle = $pdo->query("CALL ".self::GET_CURRENT_LEVEL_OF_TEAM_PROC_NAME."()");
+                $teams = $statementHandle->fetchAll();
+                return $teams;
+            }
+            catch(PDOException $e){
+            }
+            
+        }
+
+        public function get_number_puzzle_active()
+        {
+            try{
+                $pdo = $this->get_pdo_instance();
+                $statementHandle = $pdo->query("CALL ".self::GET_NUMBER_PUZZLE_ACTIVE_PROC_NAME."()");
+                $team = $statementHandle->fetch();
+                return $team;
+            }
+            catch(PDOException $e){
+            }
+            
         }
     }
 ?>

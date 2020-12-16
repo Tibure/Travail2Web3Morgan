@@ -15,12 +15,10 @@
         const GET_FILE_BY_ID_PROC_NAME = "get_file_by_id";
 
 
+
         public function get_all_puzzles(){
             $pdo = $this->get_pdo_instance();
-            $procedure = $pdo->prepare("Call ".self::GET_ALL_PUZZLE_PROC_NAME."()");
-            $procedure->execute([
-                 
-            ]);
+            $procedure = $pdo->query("Call ".self::GET_ALL_PUZZLE_PROC_NAME."()");
             $lesPuzzles = $procedure->fetchAll(PDO::FETCH_CLASS,"manageGameDTO");
             return $lesPuzzles;
         }
@@ -74,8 +72,7 @@
         public function modify_puzzle_order($puzzlesOrder){
             foreach($puzzlesOrder as $puzzleOrder){
                 $pdo = $this->get_pdo_instance();
-                $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER.
-                "(:id_puzzle, :new_order)");
+                $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER."(:id_puzzle, :new_order)");
                 $procedure->execute([
                     'id_puzzle' => $puzzleOrder['puzzle_ID'],
                     'new_order' => $puzzleOrder['puzzle_order']
@@ -86,10 +83,7 @@
 
         public function get_all_files(){
             $pdo = $this->get_pdo_instance();
-            $procedure = $pdo->prepare("Call ".self::GET_ALL_FILES_PROC_NAME."()");
-            $procedure->execute([
-                 
-            ]);
+            $procedure = $pdo->query("Call ".self::GET_ALL_FILES_PROC_NAME."()");
             $les_files = $procedure->fetchAll();
             return $les_files;
         }
@@ -103,11 +97,5 @@
            $le_file = $procedure->fetchAll();
            return $le_file;
         }
-        
-
     }
-  
-
-
-//je nutilise pas le DTO en tant que tel on va juste otute shooter les info une a unbe
 ?>

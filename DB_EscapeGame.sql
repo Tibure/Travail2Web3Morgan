@@ -9,7 +9,7 @@ USE `db_travail2`;
 DROP TABLE IF EXISTS `tbl_Game`;
 CREATE TABLE tbl_Game(
         game_ID    Int  Auto_increment  NOT NULL ,
-        start_time Time NOT NULL
+        start_time Time
 	,CONSTRAINT tbl_Game_PK PRIMARY KEY (game_ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -39,7 +39,7 @@ DROP TABLE IF EXISTS `tbl_Teams`;
 CREATE TABLE tbl_Teams(
         team_ID          Int  Auto_increment  NOT NULL ,
         name            nvarchar (50) NOT NULL UNIQUE,
-		current_puzzle_ID Int,
+		current_puzzle_order Int DEFAULT 1,
         game_ID          Int,
         email           nvarchar (50) NOT NULL UNIQUE,
         password        nvarchar (100) NOT NULL ,
@@ -84,8 +84,8 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Name not Unique', MYSQL_ERRNO = 2;
 	END IF;
     
-    INSERT INTO tbl_Teams(email, name, password, game_master)
-			VALUES(in_email, in_name, in_password, in_game_master);
+    INSERT INTO tbl_Teams(email, puzzle_ID ,name, password, game_master)
+			VALUES(in_email, (SELECT puzzle_ID FROM tbl_puzzle WHERE puzzle_order = MIN(puzzle_order)), in_name, in_password, in_game_master);
     COMMIT;
 END;;
 DELIMITER ;
@@ -94,7 +94,7 @@ DROP PROCEDURE IF EXISTS `get_all_teams`;
 DELIMITER ;;
 	CREATE PROCEDURE get_all_teams()
     BEGIN
-		SELECT name, current_puzzle_ID, game_ID, game_master FROM tbl_teams;
+		SELECT name, current_puzzle_order, game_ID, game_master FROM tbl_teams;
     END;;
 DELIMITER ;
 
@@ -210,6 +210,41 @@ DELIMITER ;;
     END;;
 DELIMITER ;;
 
+DROP PROCEDURE IF EXISTS `get_game_start_time`;
+DELIMITER ;;
+	CREATE PROCEDURE get_game_start_time()
+    BEGIN
+		SELECT UNIX_TIMESTAMP(start_time) AS start_time FROM tbl_game WHERE game_ID = (SELECT max(game_ID) AS game_ID FROM tbl_game);
+    END;;
+DELIMITER ;;
+
+DROP PROCEDURE IF EXISTS `start_game`;
+DELIMITER ;;
+	CREATE PROCEDURE start_game(
+		inTime time
+    )
+    BEGIN
+    DECLARE id int;
+    SET id = (SELECT max(game_ID) AS game_ID FROM tbl_game);
+		UPDATE tbl_game SET start_time = inTime WHERE game_ID = id;
+    END;;
+DELIMITER ;;
+
+DROP PROCEDURE IF EXISTS `get_current_level_of_teams`;
+DELIMITER ;;
+	CREATE PROCEDURE get_current_level_of_teams()
+    BEGIN
+		SELECT team_ID, name, current_puzzle_order FROM tbl_teams WHERE game_master = false;
+    END;;
+DELIMITER ;;
+
+DROP PROCEDURE IF EXISTS `get_number_puzzle_active`;
+DELIMITER ;;
+	CREATE PROCEDURE get_number_puzzle_active()
+    BEGIN
+		SELECT COUNT(puzzle_order) AS total FROM tbl_puzzle WHERE game_ID = (SELECT max(game_ID) AS game_ID FROM tbl_game) AND active = true;
+    END;;
+DELIMITER ;;
 
 DROP PROCEDURE IF EXISTS `modify_puzzle_order`
 DELIMITER ;;
@@ -236,17 +271,22 @@ DELIMITER ;;
 DROP PROCEDURE IF EXISTS `take_out_puzzle_order`
 DELIMITER ;;
 
-insert into tbl_Game (game_ID, start_time) values (1, now());
-insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (1, 'Skivee', 'Fuscia', 'Claremorris','jo', 1, 1,0,'image1.jpg');
+insert into tbl_Game (game_ID, start_time) values (1, null);
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (1, 'Skivee', 'Fuscia', 'Claremorris','jo', 1, 1,1,'image1.jpg');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (2, 'Skibox', 'Aquamarine', 'Hualin','morg', 2, 1,1,'image2.jpg');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (3, 'Yoveo', 'Indigo', 'Ourozinho', 3, 1,1,'image3.jpg');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (4, 'Edgeblab', 'Orange', 'Ruda Śląska', 4, 1,1,'allo');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (5, 'Brainbox', 'Yellow', 'Pácora', 5, 1,1,'allo');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (6, 'Babbleset', 'Crimson', 'Zhoutou', 6, 1,1,'allo');
 
-insert into tbl_teams (name,current_puzzle_ID,game_ID,email,password,game_master,last_answer_sent) values ('admin',null,1,'admin@email.com','$2y$10$vqtKQakRpcrHDv9FqMeWVuhiU9w41ASh9gLaxbAEnqLjlPKp7nA/y',true,null);
-insert into tbl_teams (name,current_puzzle_ID,game_ID,email,password,game_master,last_answer_sent) values ('player',null,1,'player@email.com','$2y$10$2QQJXXBCie32AQQ8wyh7KuILMMW2wPwOqZFj7RUW5Z/GOA6uH/r9e',false,null);
+insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('admin',1,'admin@email.com','$2y$10$614glNUoyntsScYHa5Z7pO7pEUmnWLco99YbeAB.cb8KwGQEkzl8.',true,null);
+insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('player',1,'player@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false,null);
+insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('player2',1,'player2@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false,null);
 
 insert into tbl_file(name) value('image1.jpg');
 insert into tbl_file(name) value('image2.jpg');
 insert into tbl_file(name) value('image3.jpg');
+
+CALL get_current_level_of_teams();
+CALL get_number_puzzle_active();
+
