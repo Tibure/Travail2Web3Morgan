@@ -71,13 +71,17 @@
             ]);
         }
 
-        public function modify_puzzle_order($puzzle){
-            $pdo = $this->get_pdo_instance();
-            $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER."(:id_puzzle, :new_order)");
-            $procedure->execute([
-                'id_puzzle' => $puzzle['id_puzzle'],
-                'new_order' => $puzzle['puzzle_order']
-            ]);
+        public function modify_puzzle_order($puzzlesOrder){
+            foreach($puzzlesOrder as $puzzleOrder){
+                $pdo = $this->get_pdo_instance();
+                $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER.
+                "(:id_puzzle, :new_order)");
+                $procedure->execute([
+                    'id_puzzle' => $puzzleOrder['puzzle_ID'],
+                    'new_order' => $puzzleOrder['puzzle_order']
+                ]);
+            
+            };
         }
 
         public function get_all_files(){

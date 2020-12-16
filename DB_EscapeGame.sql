@@ -134,10 +134,12 @@ BEGIN
 
     DECLARE max_puzzle_order int;
     DECLARE latest_game_id int;
-    SET max_puzzle_order = (SELECT MAX(puzzle_order)+1 AS puzzle_order FROM tbl_Puzzle);
-    SET latest_game_id = (SELECT MAX(game_ID) as game_ID FROM tbl_Puzzle);
+    START TRANSACTION;
+    SET max_puzzle_order = (SELECT MAX(puzzle_order)+1 as puzzleordermax  FROM (SELECT  * FROM tbl_Puzzle) AS tempTable);
+    SET latest_game_id = (SELECT MAX(game_ID) as gameid FROM (SELECT  * FROM tbl_Puzzle) AS tempTable);
     INSERT INTO tbl_Puzzle(title, question, answer, hint, puzzle_order, game_ID, active, image)
 			VALUES(inTitle, inQuestion, inAnswer, inHint, max_puzzle_order , latest_game_id, inActive, inImage);
+	COMMIT;
 END;;
 DELIMITER ;;
 
@@ -219,11 +221,11 @@ DELIMITER ;;
 	 DECLARE old_order int;
      START TRANSACTION;
 	
-    IF((SELECT Count(puzzle_order) FROM tbl_puzzle WHERE puzzle_order = new_order) <> 0) THEN
+    IF((SELECT puzzle_ID FROM tbl_puzzle WHERE puzzle_order = new_order) <> id_puzzle OR 0) THEN
 		SET old_order = (SELECT puzzle_order FROM tbl_puzzle WHERE puzzle_ID = id_puzzle);
-		UPDATE tbl_puzzle SET puzzle_order = (select MAX(puzzle_order)+1 from tbl_puzzle) WHERE puzzle_order = new_order;
+		UPDATE tbl_puzzle SET puzzle_order = (select MAX(puzzle_order)+1 FROM (SELECT * FROM tbl_Puzzle) AS tempTable) WHERE puzzle_order = new_order;
         UPDATE tbl_puzzle SET puzzle_order = new_order WHERE puzzle_ID = id_puzzle;
-        UPDATE tbl_puzzle SET puzzle_order = old_order WHERE puzzle_order = (select MAX(puzzle_order) from tbl_puzzle);
+        UPDATE tbl_puzzle SET puzzle_order = old_order WHERE puzzle_order = (select MAX(puzzle_order) FROM (SELECT * FROM tbl_Puzzle) AS tempTable );
     ELSE
 		UPDATE tbl_puzzle SET puzzle_order = new_order WHERE puzzle_ID = id_puzzle;
 	END IF;

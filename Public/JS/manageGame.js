@@ -1,3 +1,5 @@
+var dragging, draggedOver;
+
 $(window).on('load', function () {
     Get_all_puzzles();
     Get_all_files();
@@ -31,6 +33,62 @@ $(document).ready(function () {
             Show_image(selected_image);
         }
     });
+
+    $("#managerOrder").on("click", function() {
+        var list = document.createElement("ul");
+        list.id = "orderList";
+        $.ajax({
+            url: "/manageGame/get_all_puzzle",
+            method: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).then((data) => {
+            data.forEach(element => {
+                if(element.active){
+                    var node = document.createElement("li");    
+                    node.draggable = true;
+                    node.addEventListener('drag', setDragging); 
+                    node.addEventListener('dragover', setDraggedOver);
+                    node.addEventListener('drop', compare);
+                    node.value = element.puzzle_ID;
+                    node.innerText = element.title;
+                    list.appendChild(node)
+                }
+               
+            });
+        })
+
+        var div = document.createElement("div");
+        $(div).append(list);
+        $("#modalOrder .modal-body").empty()
+        $("#modalOrder .modal-body").append(div);
+
+    })
+
+    $("#saveOrder").on("click", function(){
+        let i = 0;
+        const puzzleArray = []
+        const li = $("#orderList li");
+        for(i = 0; i< li.length; i++){
+          puzzleArray.push({
+            puzzle_ID : $(li[i]).val(),
+            puzzle_order: i+1
+          })  
+        }
+        $.ajax({       
+            method:"POST",   
+            url: "/manageGame/modify_puzzle_order",
+            dataType: "json",
+            data: {'puzzlesOrder': puzzleArray}
+        })
+        .then(function(isValid){
+            if(isValid){
+                alert("L'ordre a été sauvegarder correctement");
+            }else{
+                alert("L'ordre n'a pas pu sauvegarder correcterment, réessayez.");
+            }
+        });
+    })
 });
 function Get_puzzle(selected_puzzle){
     $.ajax({
@@ -81,3 +139,24 @@ function Get_all_files(){
         });
     })
 };
+
+const compare = (e) =>{
+    const _draggedOver = draggedOver;
+    const _dragging  = dragging;
+    if($(dragging).index() > $(draggedOver).index())
+    $(dragging).insertBefore(draggedOver);
+    else{
+        $(dragging).insertBefore(draggedOver);
+        $(draggedOver).insertBefore(dragging);
+    }
+   
+}
+  
+  const setDraggedOver = (e) => {
+    e.preventDefault();
+    draggedOver = $(e.target);
+  }
+  
+  const setDragging = (e) =>{
+    dragging = $(e.target);
+  }
