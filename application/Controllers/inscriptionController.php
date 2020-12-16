@@ -24,9 +24,11 @@
             $email = $_POST['email']; 
             $name = $_POST['username'];
             $password = $_POST['password'];
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+            $confirm_password = $_POST['confirm_password'];
+            $response = array("isValid" => false);
+            if($password == "" || $confirm_password != $password)
             {
-                $response = array("errorMessage" => "Invalid email format", "inputID" => "email", "isValid" => false);
+                $response = array("isValid" => false);
             }
             else
             {
@@ -46,12 +48,8 @@
                         $response = array("errorMessage" => "name is already chosen", "inputID" => "username", "isValid" => false);
                     }
                 }
-                else
-                {
-                    $response = array("isValid" => false);
-                }
             }
-            echo (json_encode($response));
+        echo(json_encode($response));
     }
 }
 ?>

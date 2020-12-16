@@ -76,6 +76,7 @@
         public function add_team($email, $name, $password){
             try{
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                var_dump($passwordHash);
                 $pdo = $this->get_pdo_instance();
                 $statementHandle = $pdo->prepare("CALL ".self::ADD_TEAM."(:in_email, :in_name, :in_password, :in_game_master)");
                 $statementHandle->execute([

@@ -1,8 +1,6 @@
 <?php 
-echo('<script type="text/javascript" src="\public\js\connection.js"></script>');
+    echo('<script type="text/javascript" src="\public\js\connection.js"></script>');
 ?>
-
-
 
 <form class="needs-validation" id="connectionForm" action="/home/show" novalidate>
     <div class="form-group">

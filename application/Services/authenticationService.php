@@ -32,6 +32,7 @@
             {
                 $_SESSION["login"] = true;
                 $_SESSION["current_user"] = $email;
+                $_SESSION["login_time_stamp"] = time();
             }
             else 
             {

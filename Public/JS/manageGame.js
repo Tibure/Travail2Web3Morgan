@@ -48,18 +48,6 @@ function Get_puzzle(selected_puzzle){
         $("#puzzleActive").prop("checked",data[0].active == 1);
     });
 }
-function Show_image(selected_image){
-    $.ajax({
-        url: "/manageGame/show_image",
-        method: "POST",
-        data: {'name' : selected_image},
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    }).then((data) => {
-        $("previewImagePuzzle").attr("src", data)//a refaire
-    });
-}
-
 function Get_all_puzzles(){
     $.ajax({
         url: "/manageGame/get_all_puzzle",
@@ -68,7 +56,6 @@ function Get_all_puzzles(){
         dataType: "json"
     }).then((data) => {
         $('#PuzzleSelect').append($("<option value=\"0\">Ajouter une nouvelle énigme</option>"));
-
         data.forEach(element => {
             $('#PuzzleSelect').append($("<option>", {
                 value: element.puzzle_ID,

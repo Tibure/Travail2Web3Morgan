@@ -97,6 +97,7 @@
         }
 
         public function delete_puzzle(){
+            
             $puzzleId = $_POST['puzzleID'];
             try{
                 $this->manageGame->delete_a_puzzle($puzzleId);

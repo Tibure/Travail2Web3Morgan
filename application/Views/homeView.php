@@ -1,3 +1,16 @@
+<?php
+if(isset($_SESSION["login"]) && isset($_SESSION["login_time_stamp"]))  
+{ 
+    if(time()-$_SESSION["login_time_stamp"] > 1800)   
+    { 
+        session_unset(); 
+        session_destroy(); 
+        header("Location:/connection/show"); 
+    } 
+} 
+
+?>
+
 <h1>Progression des parties</h1>
 
 

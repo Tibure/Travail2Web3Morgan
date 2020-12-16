@@ -16,14 +16,21 @@ echo('<script type="text/javascript" src="\public\js\inscription.js"></script>')
         <label for="username">nom d'utilisateur</label>
         <input type="text" class="form-control" id="username" REQUIRED>
         <div class="invalid-feedback">
-            Veuillez remplir ce champ.
+            Veuillez remplir ce champ (3 caractère minimum et 16 maximum).
         </div>
     </div>
     <div class="form-group">
         <label for="password">Mot de passe</label>
-        <input type="password" class="form-control" id="password" REQUIRED>
+        <input type="password" class="form-control needs-Equal" id="password" REQUIRED pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*\/#?&()])[A-Za-z\d@$!%*\/#?&()]{3,}$">
         <div class="invalid-feedback">
-            Veuillez remplir ce champ.
+            Veuillez remplir ce champ (vous devez utiliser minimum une lettre, un chiffre et un symbole).
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Confirmez mot de passe</label>
+        <input type="password" class="form-control needs-Equal" id="confirm_password" REQUIRED pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*\/#?&()])[A-Za-z\d@$!%*\/#?&()]{3,}$">
+        <div class="invalid-feedback">
+            Veuillez remplir ce champ, il doit correspondre avec le mot de passe.
         </div>
     </div>
     
@@ -33,10 +40,10 @@ echo('<script type="text/javascript" src="\public\js\inscription.js"></script>')
   <div class="modal-dialog modal-lg">
      <div class="modal-content">
      <div class="modal-header">
-         <h4 class="modal-title">Signed up!</h4>
+         <h4 class="modal-title">Inscription !</h4>
      </div>
      <div class="modal-body">
-         <p>Congrats! you succesfully made an account!</p>
+         <p>Vous êtes inscrit avec succès !</p>
      </div>
      <div class="modal-footer">
          <button type="submit" class="btn btn-white" >OK</button>
