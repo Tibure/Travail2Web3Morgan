@@ -9,6 +9,7 @@
         const GET_PUZZLE_INFO_PROC_NAME = "get_puzzle_info";
         const GET_ANSWER_FROM_EMAIL_PROC_NAME = "get_answer_from_email";
         const CHANGE_PUZZLE_PROC_NAME = "change_puzzle";
+        const GET_ALL_HINTS_AVAILABLE = "get_all_hints_available";
 
         public function get_game_start_time()
         {
@@ -105,6 +106,18 @@
             catch(Exception $e)
             {
             } 
+        }
+
+        public function get_all_hints_available($current_level){
+            try{
+                $pdo = $this->get_pdo_instance();
+                $statementHandle = $pdo->prepare("CALL ".self::GET_ALL_HINTS_AVAILABLE."(:current_level)");
+                $statementHandle->execute(["current_level"=>$current_level]);
+                $hints_available = $statementHandle->fetchAll();
+                return $hints_available;
+            }catch(PDOException $e){
+
+            }
         }
     }
 ?>

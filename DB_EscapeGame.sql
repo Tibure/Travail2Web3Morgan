@@ -261,6 +261,27 @@ DELIMITER ;;
     END;;
 DELIMITER ;;
 
+DROP PROCEDURE IF EXISTS `get_all_hints_available`
+DELIMITER ;;
+	CREATE PROCEDURE get_all_hints_available(
+    current_level int
+    )
+    BEGIN
+		SELECT title, hint, puzzle_order FROM tbl_puzzle WHERE puzzle_order <= current_level ORDER BY puzzle_order;
+    END;;
+DELIMITER ;;
+
+
+DROP PROCEDURE IF EXISTS `get_current_level_of_one_team`;
+DELIMITER ;;
+	CREATE PROCEDURE get_current_level_of_one_team(
+		in_email NVARCHAR(50)
+    )
+    BEGIN
+		SELECT current_puzzle_order FROM tbl_teams WHERE email = in_email;
+    END;;
+DELIMITER ;;
+
 DROP PROCEDURE IF EXISTS `get_current_level_of_teams`;
 DELIMITER ;;
 	CREATE PROCEDURE get_current_level_of_teams()

@@ -122,7 +122,7 @@
     </div>
 </form>
 
-<div class="modal fade" id="modalOrder" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="modalHints" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -134,8 +134,8 @@
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveOrder">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" id="saveOrder">Sauvegarder</button>
       </div>
     </div>
   </div>

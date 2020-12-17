@@ -80,5 +80,12 @@
         public function retrieveFile($id_file){
             FileService::get_instance()->retreive_image($id_file);
         }
+
+        public function get_all_hints_available(){
+            $current_user_email = $_SESSION["current_user"];
+            $current_level = $this->teamModel->get_current_level_of_one_team($current_user_email)["current_puzzle_order"];
+            $availableHints = $this->gameModel->get_all_hints_available($current_level);
+            echo(json_encode($availableHints));
+        }
     }
 ?>

@@ -14,6 +14,7 @@
         const GET_GAME_MASTER_PROC_NAME = "get_game_master";
         const ADD_TEAM_PROC_NAME = "add_team";
         const GET_CURRENT_LEVEL_OF_TEAM_PROC_NAME = "get_current_level_of_teams";
+        const GET_CURRENT_LEVEL_OF_ONE_TEAM = "get_current_level_of_one_team";
         const GET_NUMBER_PUZZLE_ACTIVE_PROC_NAME = "get_number_puzzle_active";
 
         public function get_all_teams():array{  
@@ -105,6 +106,18 @@
             catch(PDOException $e){
             }
             
+        }
+
+        public function get_current_level_of_one_team($email){
+            try{
+                $pdo = $this->get_pdo_instance();
+                $statementHandle = $pdo->prepare("CALL ".self::GET_CURRENT_LEVEL_OF_ONE_TEAM."(:in_email)");
+                $statementHandle->execute(["in_email"=>$email]);
+                $current_level = $statementHandle->fetch();
+                return $current_level;
+            }catch(PDOException $e){
+
+            }
         }
 
         public function get_number_puzzle_active()

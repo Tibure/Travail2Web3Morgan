@@ -4,9 +4,11 @@ $(window).on('load', function(){
 
 $(document).ready(function () {
 
+    document.getElementById("btn_hint").addEventListener("click", function(event){
+        show_hints();
+    })
     document.getElementById("btn_answer").addEventListener("click", function (event) {
-    event.preventDefault();
-    verify_answer();
+        verify_answer();
     });
 });
 
@@ -24,7 +26,7 @@ function verify_answer()
         .then(function (response) {
             if(response === true)
             {
-                $("#gameForm").submit();
+                show_button_next();
             }
             else
             {
@@ -45,5 +47,56 @@ function fill_puzzle_info()
         document.getElementById("title").innerHTML = data.title;
         document.getElementById("question").innerHTML = "Question : " + data.question;
         $("#image").attr("src", "/game/retrieveFile/"+data.image_id);
+    });
+}
+
+function show_button_next(){
+   const buttonRealHeight = parseFloat($('#btn_answer').css("height"));
+   $("#btn_answer").text("*click*");
+   $('#btn_answer').attr("disabled", true);
+   $('#btn_next_puzzle').attr("disabled", false);
+   $("#btn_answer").animate(
+   {
+       height: buttonRealHeight-10+"px"
+   },
+   {   
+       duration: 100,
+       complete: function(){
+           $("#btn_answer").animate(
+           {
+               height: buttonRealHeight+"px"
+           },
+           {   
+               duration: 600
+           })
+       }
+   });
+   
+   $('#btn_next_puzzle').animate(
+   {
+       opacity: '100%'
+   }, 300);
+}
+
+function show_hints(){
+    $.ajax({
+        method: "GET",
+        url: "/game/get_all_hints_available",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    }).then(function (inData) {
+        const data = inData;
+        var hint_list = document.createElement("ul");
+        hint_list.className = "list-group";
+        (data).forEach(Element => {
+            var node = document.createElement("li");    
+            node.className = "list-group-item";
+            node.innerText =  Element.title + ": "+Element.hint;
+            hint_list.appendChild(node)
+        });
+        var div = document.createElement("div");
+        $(div).append(hint_list);
+        $("modalHints .modal-body").empty();
+        $("modalHints .modal-body").append(div);
     });
 }
