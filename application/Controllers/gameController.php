@@ -3,6 +3,7 @@
     require_once(PATH_CORE."/controller.php");
     require_once(PATH_MODELS."/gameModel.php");
     require_once(PATH_MODELS."/teamModel.php");
+    require_once(PATH_SERVICE."/FileService.php");
     
     class GameController extends Controller{
         
@@ -21,11 +22,13 @@
             $view = new View("gameView.php");
             $data = array();
             $content = $view->render($data);
+            echo $this->render_template_with_content(self::GAME_TITLE, $content);
         }
 
         public function start_game()
         {
             $this->gameModel->start_game();
+            header('Location:/home/show');
         }
 
         public function is_game_started()
@@ -55,6 +58,36 @@
             $time = $this->gameModel->get_game_start_time()["start_time"];
             $time_left =3600 - (time() - $time);
             echo(json_encode($time_left));
+        }
+
+        public function fill_puzzle_info(){
+            $puzzle_info = $this->gameModel->get_puzzle_info();
+            echo(json_encode($puzzle_info));
+        }
+
+        public function verify_answer(){
+            $answer = $_POST["answer"];
+            $is_answer_good = $this->gameModel->verify_answer($answer);
+            echo(json_encode($is_answer_good));
+        }
+
+        public function change_puzzle(){
+            $this->gameModel->change_puzzle();
+            header('Location:/game/show');
+        }
+
+        public function retrieveFile($id_file){
+            //FileService::get_instance()->retreive_image($id_file);
+            $name = PATH_FILES.'/image1.jpg';
+            $fp = fopen($name, 'rb');
+            // envoie les bons en-têtes
+            header("Content-Type: image/jpeg");
+            header("Content-Length: " . filesize($name));
+
+            // envoie le contenu du fichier, puis stoppe le script
+            fpassthru($fp);
+            
+            exit;
         }
     }
 ?>

@@ -2,14 +2,15 @@
     require_once(PATH_DTO."/fileDTO.php");
     require_once(PATH_MODELS."/fileModel.php");
     require_once(PATH_CONTROLLERS."/fileController.php");
+    require_once(PATH_MODELS."/manageGameModel.php");
 
     
     class FileService{
         private static $FileService= null;
-     
+        private $manageGame;
 
         public function __construct(){
-          
+            $this->manageGame = new ManageGameModel();
         } 
 
         public static function get_instance(){
@@ -112,6 +113,12 @@
                 header('Content-Length: ' . filesize($file));
                 readfile($file);
             };               
+        }
+
+        public function retreive_image($id_file)
+        {
+
+
         }
 
         public function get_upload_file_name()

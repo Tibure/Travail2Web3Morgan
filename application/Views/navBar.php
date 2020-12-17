@@ -12,7 +12,6 @@
       </li>
       <?php
       echo('<script type="text/javascript" src="\public\js\navBar.js"></script>');
-      //echo("<li class=\"nav-item\"><a id=\"join_game\" class=\"nav-link\" href=\/game/show"\">Rejoindre la partie<span class=\"sr-only\">(current)</span></a></li>");
     require_once(PATH_MODELS."/teamModel.php");
     require_once(PATH_CONTROLLERS."/gameController.php");
     try {
@@ -29,7 +28,7 @@
               }
               echo("<li class=\"nav-item\" id=\"join_game\"></li>");
               echo("</ul><ul class=\"navbar-nav justify-content-end\"> 
-              <li class=\"nav-item\" style=\"color:green\" id=\"time_left\"><span>1:00:00</span></li>
+              <li class=\"nav-item nav-link\" style=\"color:green\" id=\"time_left\"><span>1:00:00</span></li>
               <li class=\"nav-item\"><a class=\"nav-link\" href=\"/connection/disconnect\">Deconnexion<span class=\"sr-only\">(current)</span></a></li>
               <li class=\"nav-item justify-content-end\"><a class=\"nav-link disabled\" href=\"\">­<span>Connecté: ".$userValues["name"]."</span></a></li>");
             }

@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `tbl_Puzzle`;
 CREATE TABLE tbl_Puzzle(
         puzzle_ID        Int  Auto_increment  NOT NULL ,
         title           nvarchar (50) NOT NULL UNIQUE,
-        question        nvarchar (50) NOT NULL UNIQUE,
+        question        nvarchar (100) NOT NULL UNIQUE,
         answer          nvarchar (50) NOT NULL ,
         hint			nvarchar (50) ,
         puzzle_order     Int NOT NULL UNIQUE,
@@ -175,7 +175,6 @@ DELIMITER ;;
     END;;
 DELIMITER ;
 
-
 DROP PROCEDURE IF EXISTS `get_puzzle_by_id`;
 DELIMITER ;;
 	CREATE PROCEDURE get_puzzle_by_id(
@@ -230,6 +229,37 @@ DELIMITER ;;
     END;;
 DELIMITER ;;
 
+
+DROP PROCEDURE IF EXISTS `get_puzzle_info`;
+DELIMITER ;;
+	CREATE PROCEDURE get_puzzle_info(
+		in_email nvarchar (50)
+    )
+    BEGIN
+		SELECT title, question, image FROM tbl_puzzle WHERE active = true AND puzzle_order = (SELECT current_puzzle_order FROM tbl_teams WHERE email = in_email);
+    END;;
+DELIMITER ;;
+
+DROP PROCEDURE IF EXISTS `get_answer_from_email`;
+DELIMITER ;;
+	CREATE PROCEDURE get_answer_from_email(
+			in_email nvarchar(50)
+    )
+    BEGIN
+        SELECT answer FROM tbl_puzzle WHERE active = true AND puzzle_order = (SELECT current_puzzle_order FROM tbl_teams WHERE email = in_email);
+    END;;
+DELIMITER ;;
+
+DROP PROCEDURE IF EXISTS `change_puzzle`;
+DELIMITER ;;
+	CREATE PROCEDURE change_puzzle(
+			in_email nvarchar(50)
+    )
+    BEGIN
+        UPDATE tbl_teams SET current_puzzle_order = current_puzzle_order + 1 WHERE email = in_email;
+    END;;
+DELIMITER ;;
+
 DROP PROCEDURE IF EXISTS `get_current_level_of_teams`;
 DELIMITER ;;
 	CREATE PROCEDURE get_current_level_of_teams()
@@ -272,12 +302,10 @@ DROP PROCEDURE IF EXISTS `take_out_puzzle_order`
 DELIMITER ;;
 
 insert into tbl_Game (game_ID, start_time) values (1, null);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (1, 'Skivee', 'Fuscia', 'Claremorris','jo', 1, 1,1,'image1.jpg');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (2, 'Skibox', 'Aquamarine', 'Hualin','morg', 2, 1,1,'image2.jpg');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (3, 'Yoveo', 'Indigo', 'Ourozinho', 3, 1,1,'image3.jpg');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (4, 'Edgeblab', 'Orange', 'Ruda Śląska', 4, 1,1,'allo');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (5, 'Brainbox', 'Yellow', 'Pácora', 5, 1,1,'allo');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , puzzle_order, game_ID, active, image) values (6, 'Babbleset', 'Crimson', 'Zhoutou', 6, 1,1,'allo');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (1, 'Le chat', '4', 'Combien de patte possède un chat ?','Le double de celui des humains', 1, 1,1,'');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (2, 'Le perroquet', '2', 'Combien de patte possède un perroquet ?','La moitié de celle du chat', 2, 1,1,'');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (3, 'Les sens', '3', 'Si je suis muet, aveugle et sourd, combien de sens me reste-t-il ?','Muet ne correspond pas à un sens', 3, 1,1,'');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (4, 'La vue', 'Le nez', 'Je porte des lunettes mais je ne vois rien, qui suis-je ?','Qu\'est ce qui porte les lunettes sur notre visage', 4, 1,1,'');
 
 insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('admin',1,'admin@email.com','$2y$10$614glNUoyntsScYHa5Z7pO7pEUmnWLco99YbeAB.cb8KwGQEkzl8.',true,null);
 insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('player',1,'player@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false,null);
@@ -287,6 +315,5 @@ insert into tbl_file(name) value('image1.jpg');
 insert into tbl_file(name) value('image2.jpg');
 insert into tbl_file(name) value('image3.jpg');
 
-CALL get_current_level_of_teams();
-CALL get_number_puzzle_active();
+
 

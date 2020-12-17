@@ -6,14 +6,14 @@
     {
         const DELETE_PUZZLE_BY_ID_PROC_NAME = "delete_puzzle_by_id";
         const MODIFY_PUZZLE_PROC_NAME = "modify_puzzle";
-        const MODIFY_PUZZLE_ORDER = "modify_puzzle_order";
+        const MODIFY_PUZZLE_ORDER_PROC_NAME = "modify_puzzle_order";
 
         const ADD_PUZZLE_PROC_NAME = "add_puzzle";
         const GET_ALL_PUZZLE_PROC_NAME = "get_all_puzzle";
         const GET_PUZZLE_BY_ID_PROC_NAME = "get_puzzle_by_id";
         const GET_ALL_FILES_PROC_NAME = "get_all_files";
         const GET_FILE_BY_ID_PROC_NAME = "get_file_by_id";
-
+        const GET_IMAGE_BY_ID_PROC_NAME = "get_image_by_id";
 
 
         public function get_all_puzzles(){
@@ -72,7 +72,7 @@
         public function modify_puzzle_order($puzzlesOrder){
             foreach($puzzlesOrder as $puzzleOrder){
                 $pdo = $this->get_pdo_instance();
-                $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER."(:id_puzzle, :new_order)");
+                $procedure = $pdo->prepare("Call ".self::MODIFY_PUZZLE_ORDER_PROC_NAME."(:id_puzzle, :new_order)");
                 $procedure->execute([
                     'id_puzzle' => $puzzleOrder['puzzle_ID'],
                     'new_order' => $puzzleOrder['puzzle_order']
@@ -96,6 +96,17 @@
            ]);
            $le_file = $procedure->fetchAll();
            return $le_file;
+        }
+
+        public function get_image_name($id_image)
+        {
+            $pdo = $this->get_pdo_instance();
+            $procedure = $pdo->prepare("Call ".self::GET_IMAGE_BY_ID_PROC_NAME."(:in_id_image)");
+            $procedure->execute([
+                'in_id_image' => $id_image
+           ]);
+           $image = $procedure->fetchAll();
+           return $image;
         }
     }
 ?>

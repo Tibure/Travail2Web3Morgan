@@ -30,9 +30,16 @@ function get_current_level_of_teams()
         document.getElementById("games").innerHTML = "";
         data.forEach(element => {
             const current_puzzle = element.current_puzzle_order;
+            var new_class = "";
+            var percent = (current_puzzle/number_puzzle)*100;
+            if(percent > 100)
+            {
+                percent = 100;
+                new_class = "bg-success";
+            }
             document.getElementById("subtitle").innerHTML = "<h4> Progression des parties </h4>";
             document.getElementById("games").innerHTML += '<h6>'+element.name+'</h6> <div class="progress">'+
-            '<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="'+current_puzzle+'" aria-valuemin="0"aria-valuemax="'+number_puzzle+'">' 
+            '<div class="progress-bar '+new_class+'" role="progressbar" style="width: '+percent+'%" aria-valuenow="'+current_puzzle+'" aria-valuemin="0" aria-valuemax="'+number_puzzle+'">' 
             +current_puzzle+'/'+number_puzzle+'</div></div> <br><br>';
         });
     })
@@ -56,6 +63,7 @@ function get_number_puzzle_active()
         if(!game_status)
         {
             document.getElementById("subtitle").innerHTML = "<h4> En attente du lancement de la partie </h4>";
+            document.getElementById("games").innerHTML = "";
         }
         else
         {

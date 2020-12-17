@@ -1,19 +1,23 @@
+<?php 
+echo('<script type="text/javascript" src="\public\js\gameView.js"></script>');
+?>
+
 <div class="container">
-    <span>58 secondes</span><br>
-    <img src="public/images/MorseCode.jpg" class="img-fluid" alt="Responsive image">
-    <h3>Question 1 : Vous devez résoudre le code morse</h3>
-    <form class="needs-validation" novalidate>
+    <img id="image" src="/game/retrieveFile/1" class="img-fluid" alt="">
+    <h2 id="title"></h2>
+    <h4 id="question"></h4>
+    <form id="gameForm" action="/game/change_puzzle" method="GET">
         <div class="form-group">
-            <label for="reponse">Votre réponse</label>
-            <input type="text" class="form-control" id="reponse" REQUIRED>
-            <div class="invalid-feedback">
+            <label for="answer">Votre réponse</label>
+            <input type="text" class="form-control" id="answer">
+<!--             <div class="invalid-feedback">
                 Mauvaise réponse... Voulez-vous un indice?
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="indice">
                     <label class="form-check-label" for="indice">Indice</label>
                 </div>
-            </div>
+            </div> -->
         </div>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <button type="submit" id="btn_answer" class="btn btn-primary">Répondre</button>
     </form>
 </div>
