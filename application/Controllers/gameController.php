@@ -36,7 +36,7 @@
             {
                 $is_game_started = false;
             }
-            return $is_game_started;
+            echo(json_encode($is_game_started));
         }
 
         public function get_current_level_of_teams()
@@ -49,6 +49,12 @@
         {
             $number = $this->teamModel->get_number_puzzle_active();
             echo(json_encode($number));
+        }
+
+        public function get_time_left(){
+            $time = $this->gameModel->get_game_start_time()["start_time"];
+            $time_left =3600 - (time() - $time);
+            echo(json_encode($time_left));
         }
     }
 ?>

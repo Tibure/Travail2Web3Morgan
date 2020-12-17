@@ -10,7 +10,7 @@ $(window).on('load', function(){
 function get_game_status()
 {
     $.ajax({
-        url: "/home/is_game_started",
+        url: "/game/is_game_started",
         method: "GET",
         contentType: "application/json; charset=utf-8",
         dataType: "json"
@@ -50,17 +50,16 @@ function get_number_puzzle_active()
     })
 }
 
- var refreshFunction = () =>{
+ function refreshFunction(){
      setInterval(function(){
         get_game_status();
         if(!game_status)
         {
             document.getElementById("subtitle").innerHTML = "<h4> En attente du lancement de la partie </h4>";
-            $("#join_game").attr("href", "");
         }
         else
         {
-            $("#join_game").attr("href", "/game/show");
+
             document.getElementById("subtitle").innerHTML = "";
             get_current_level_of_teams();
         }

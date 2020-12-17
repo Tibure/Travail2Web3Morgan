@@ -36,6 +36,7 @@ $(document).ready(function () {
 
     $("#managerOrder").on("click", function() {
         var list = document.createElement("ul");
+        list.className = "list-group";
         list.id = "orderList";
         $.ajax({
             url: "/manageGame/get_all_puzzle",
@@ -47,6 +48,7 @@ $(document).ready(function () {
                 if(element.active){
                     var node = document.createElement("li");    
                     node.draggable = true;
+                    node.className = "list-group-item";
                     node.addEventListener('drag', setDragging); 
                     node.addEventListener('dragover', setDraggedOver);
                     node.addEventListener('drop', compare);
@@ -143,10 +145,8 @@ function Get_all_files(){
 };
 
 const compare = (e) =>{
-    const _draggedOver = draggedOver;
-    const _dragging  = dragging;
     if($(dragging).index() > $(draggedOver).index())
-    $(dragging).insertBefore(draggedOver);
+        $(dragging).insertBefore(draggedOver);
     else{
         $(dragging).insertBefore(draggedOver);
         $(draggedOver).insertBefore(dragging);
