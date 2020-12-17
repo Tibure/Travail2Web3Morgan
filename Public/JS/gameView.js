@@ -44,9 +44,16 @@ function fill_puzzle_info()
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     }).then(function (data) {
-        document.getElementById("title").innerHTML = data.title;
-        document.getElementById("question").innerHTML = "Question : " + data.question;
-        $("#image").attr("src", "/game/retrieveFile/"+data.image_id);
+        if(data){
+            document.getElementById("title").innerHTML = data.title;
+            document.getElementById("question").innerHTML = "Question : " + data.question;
+            $("#image").attr("src", "/game/retrieveFile/"+data.image_id);
+        }
+        else{
+            alert("Félicitation vous avez gagner!");
+            window.location.href =  "../home/show";
+        }
+
     });
 }
 
@@ -75,7 +82,7 @@ function show_button_next(){
    $('#btn_next_puzzle').animate(
    {
        opacity: '100%'
-   }, 300);
+   }, 1000);
 }
 
 function show_hints(){
@@ -91,12 +98,12 @@ function show_hints(){
         (data).forEach(Element => {
             var node = document.createElement("li");    
             node.className = "list-group-item";
-            node.innerText =  Element.title + ": "+Element.hint;
-            hint_list.appendChild(node)
+            node.innerText =  "["+Element.puzzle_order + "] "+Element.title + ": "+Element.hint;
+            hint_list.appendChild(node);
         });
         var div = document.createElement("div");
         $(div).append(hint_list);
-        $("modalHints .modal-body").empty();
-        $("modalHints .modal-body").append(div);
+        $("#modalHints .modal-body").empty();
+        $("#modalHints .modal-body").append(div);
     });
 }

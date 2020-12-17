@@ -74,6 +74,7 @@
         public function change_puzzle(){
             $this->gameModel->change_puzzle();
             $teams = $this->teamModel->get_current_level_of_teams();
+            if($teams)
             header('Location:/game/show');
         }
 
