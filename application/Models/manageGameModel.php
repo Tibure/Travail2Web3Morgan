@@ -94,7 +94,7 @@
             $procedure->execute([
                 'in_id_file' => $id_file
            ]);
-           $le_file = $procedure->fetchAll();
+           $le_file = $procedure->fetch();
            return $le_file;
         }
 

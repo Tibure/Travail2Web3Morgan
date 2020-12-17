@@ -26,8 +26,11 @@ function verify_answer()
             {
                 $("#gameForm").submit();
             }
-        }).catch(function (error) {
-            alert("Erreur inconnue ! Veuillez nous contactez");
+            else
+            {
+                alert("C'est une mauvaise réponse !")
+                $("#answer").val("");
+            }
         });
 };
 
@@ -41,6 +44,6 @@ function fill_puzzle_info()
     }).then(function (data) {
         document.getElementById("title").innerHTML = data.title;
         document.getElementById("question").innerHTML = "Question : " + data.question;
-       $("#image").attr("src", data.image);
+        $("#image").attr("src", "/game/retrieveFile/"+data.image_id);
     });
 }

@@ -55,22 +55,15 @@
         </div>
 
         <div class="input-group mb-3">
-            <!-- reverifier les validatre -->
             <div class="input-group-prepend">
                 <span class="input-group-text" id="image">Image de l'énigme : </span>
             </div>
             <select class="form-control" id="selectImage" name="selectImage">
-                
-                <!-- cick image 1 -> va trouver le path de l<image dans la base de donner
-                    
-                    dans file controller(va regarder si la session est game master) un truc retreivefile() qui appel celui de file service.
-                     il va falloir changer le content type de celui de file service pour adapter en image. kool
-                     Pour toute question demander MOrgan KAtjounis du 01-->
             </select>
-           <!--  <img id="previewImagePuzzle" src="" width="500" height="600"> -->
-           <!--  <div class="invalid-feedback">
-                Le champ ne peux pas être vide.
-            </div> -->
+        </div>
+
+        <div class="text-center mb-3">
+        <img id="previewImagePuzzle" src=" " width="400" height="300" class="rounded">
         </div>
 
         <div class="input-group mb-3">
@@ -89,10 +82,7 @@
                 <span class="input-group-text" id="indice">indice de l'énigme :</span>
             </div>
             <input type="text" class="form-control" placeholder="Entrer un indice." aria-label="indice"
-            id="puzzleHint" name="puzzleHint" aria-describedby="indice" >
-           <!--  <div class="invalid-feedback">
-                Le champ ne peux pas être vide.
-            </div> -->
+            id="puzzleHint" name="puzzleHint" aria-describedby="indice">
         </div>
 
         <div class="input-group mb-3">

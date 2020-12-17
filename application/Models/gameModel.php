@@ -1,4 +1,3 @@
-
 <?php
     require_once(PATH_CORE."/dbModel.php");
     require_once(PATH_DTO."/manageGameDTO.php");
@@ -43,7 +42,7 @@
             {
                 $current_user_email = "";
                 $pdo = $this->get_pdo_instance();
-                if($_SESSION["login"] === true)
+                if($_SESSION["login"] == true)
                 {
                     $current_user_email = $_SESSION["current_user"];
                 }

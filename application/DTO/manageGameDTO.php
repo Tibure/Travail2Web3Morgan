@@ -10,9 +10,6 @@
         public $game_ID;
         public $active; 
         public $image;
-        
-        public function __construct(){
-        }
 
         public function get_id():int{
             return $this->puzzle_ID;

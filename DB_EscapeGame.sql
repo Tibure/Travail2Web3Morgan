@@ -18,7 +18,7 @@ CREATE TABLE `tbl_file` (
   `id_file` int(11) NOT NULL AUTO_INCREMENT,
   `name` nvarchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_file`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `tbl_Puzzle`;
 CREATE TABLE tbl_Puzzle(
@@ -30,8 +30,9 @@ CREATE TABLE tbl_Puzzle(
         puzzle_order     Int NOT NULL UNIQUE,
         game_ID          Int NOT NULL,
         active 			boolean NOT NULL,
-        image			nvarchar(50)
+        image_id	    INT
 	,CONSTRAINT tbl_Puzzle_PK PRIMARY KEY (puzzle_ID)
+    ,CONSTRAINT tbl_Puzzle_tbl_file_FK FOREIGN KEY (image_id) REFERENCES tbl_file(id_file)
 	,CONSTRAINT tbl_Puzzle_tbl_Game_FK FOREIGN KEY (game_ID) REFERENCES tbl_Game(game_ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -171,7 +172,7 @@ DROP PROCEDURE IF EXISTS `get_all_puzzle`;
 DELIMITER ;;
 	CREATE PROCEDURE get_all_puzzle()
     BEGIN
-		SELECT puzzle_ID, title, question, answer, hint, puzzle_order ,game_ID, active, image FROM tbl_Puzzle order by puzzle_order;
+		SELECT puzzle_ID, title, question, answer, hint, puzzle_order ,game_ID, active, image_id FROM tbl_Puzzle order by puzzle_order;
     END;;
 DELIMITER ;
 
@@ -181,7 +182,7 @@ DELIMITER ;;
 			inPuzzle_ID INT
     )
     BEGIN
-		SELECT puzzle_ID, title, question, answer, hint, puzzle_order, game_ID, active, image FROM tbl_Puzzle
+		SELECT puzzle_ID, title, question, answer, hint, puzzle_order, game_ID, active, image_id FROM tbl_Puzzle
         WHERE
 			puzzle_ID = inPuzzle_ID;
         
@@ -203,7 +204,7 @@ DELIMITER ;;
 			in_id_file INT
     )
     BEGIN
-		SELECT id_file,name FROM tbl_file
+		SELECT id_file, name FROM tbl_file
         WHERE
 			id_file = in_id_file;
     END;;
@@ -236,7 +237,7 @@ DELIMITER ;;
 		in_email nvarchar (50)
     )
     BEGIN
-		SELECT title, question, image FROM tbl_puzzle WHERE active = true AND puzzle_order = (SELECT current_puzzle_order FROM tbl_teams WHERE email = in_email);
+		SELECT title, question, image_id FROM tbl_puzzle WHERE active = true AND puzzle_order = (SELECT current_puzzle_order FROM tbl_teams WHERE email = in_email);
     END;;
 DELIMITER ;;
 
@@ -301,19 +302,17 @@ DELIMITER ;;
 DROP PROCEDURE IF EXISTS `take_out_puzzle_order`
 DELIMITER ;;
 
+insert into tbl_file(name) value('image1.jpg');
+insert into tbl_file(name) value('image2.jpg');
+insert into tbl_file(name) value('image3.jpg');
+insert into tbl_file(name) value('ordinateur.jpg');
+
 insert into tbl_Game (game_ID, start_time) values (1, null);
-insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (1, 'Le chat', '4', 'Combien de patte possède un chat ?','Le double de celui des humains', 1, 1,1,'');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (2, 'Le perroquet', '2', 'Combien de patte possède un perroquet ?','La moitié de celle du chat', 2, 1,1,'');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (3, 'Les sens', '3', 'Si je suis muet, aveugle et sourd, combien de sens me reste-t-il ?','Muet ne correspond pas à un sens', 3, 1,1,'');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image) values (4, 'La vue', 'Le nez', 'Je porte des lunettes mais je ne vois rien, qui suis-je ?','Qu\'est ce qui porte les lunettes sur notre visage', 4, 1,1,'');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image_id) values (1, 'Le chat', '4', 'Combien de patte possède un chat ?','Le double de celui des humains', 1, 1,1,'1');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image_id) values (2, 'Le perroquet', '2', 'Combien de patte possède un perroquet ?','La moitié de celle du chat', 2, 1,1,'2');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image_id) values (3, 'Les sens', '3', 'Si je suis muet, aveugle et sourd, combien de sens me reste-t-il ?','Muet ne correspond pas à un sens', 3, 1,1,'3');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image_id) values (4, 'La vue', 'Le nez', 'Je porte des lunettes mais je ne vois rien, qui suis-je ?','Qu\'est ce qui porte les lunettes sur notre visage', 4, 1,1,'4');
 
 insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('admin',1,'admin@email.com','$2y$10$614glNUoyntsScYHa5Z7pO7pEUmnWLco99YbeAB.cb8KwGQEkzl8.',true,null);
 insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('player',1,'player@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false,null);
 insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('player2',1,'player2@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false,null);
-
-insert into tbl_file(name) value('image1.jpg');
-insert into tbl_file(name) value('image2.jpg');
-insert into tbl_file(name) value('image3.jpg');
-
-
-

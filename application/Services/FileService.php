@@ -22,13 +22,10 @@
 
         public function add_file()
         {
-           // var_dump($_FILES['file']);
             $uploadfile = PATH_FILES . "/" . basename($_FILES['file']['name']);
- 
             echo '<pre>';
             if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) 
             {
-                ///ajouter une page de validation ou un msg bravo ca fonctionne
                 echo "File is valid, and was successfully uploaded.\n";
                 header("location:/manageGame/show");
             } else 
@@ -117,8 +114,16 @@
 
         public function retreive_image($id_file)
         {
-
-
+            $image = $this->manageGame->get_a_file($id_file);
+            if($image != null)
+            {
+                $name = PATH_FILES.'/'.$image["name"];
+                $fp = fopen($name, 'rb');
+                header("Content-Type: image/jpeg");
+                header("Content-Length: " . filesize($name));
+                fpassthru($fp);
+                exit;
+            }  
         }
 
         public function get_upload_file_name()

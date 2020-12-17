@@ -73,21 +73,12 @@
 
         public function change_puzzle(){
             $this->gameModel->change_puzzle();
+            $teams = $this->teamModel->get_current_level_of_teams();
             header('Location:/game/show');
         }
 
         public function retrieveFile($id_file){
-            //FileService::get_instance()->retreive_image($id_file);
-            $name = PATH_FILES.'/image1.jpg';
-            $fp = fopen($name, 'rb');
-            // envoie les bons en-têtes
-            header("Content-Type: image/jpeg");
-            header("Content-Length: " . filesize($name));
-
-            // envoie le contenu du fichier, puis stoppe le script
-            fpassthru($fp);
-            
-            exit;
+            FileService::get_instance()->retreive_image($id_file);
         }
     }
 ?>

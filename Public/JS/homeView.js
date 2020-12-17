@@ -1,5 +1,6 @@
 let game_status;
 let number_puzzle;
+let win_game = false;
 
 $(window).on('load', function(){
     document.getElementById("subtitle").innerHTML = "<h4> En attente du lancement de la partie </h4>";
@@ -28,13 +29,15 @@ function get_current_level_of_teams()
         dataType: "json"
     }).then(function(data){
         document.getElementById("games").innerHTML = "";
-        data.forEach(element => {
-            const current_puzzle = element.current_puzzle_order;
+        data.forEach(element => 
+        {
+            var current_puzzle = element.current_puzzle_order;
             var new_class = "";
             var percent = (current_puzzle/number_puzzle)*100;
             if(percent > 100)
             {
                 percent = 100;
+                current_puzzle = number_puzzle;
                 new_class = "bg-success";
             }
             document.getElementById("subtitle").innerHTML = "<h4> Progression des parties </h4>";
@@ -57,8 +60,8 @@ function get_number_puzzle_active()
     })
 }
 
- function refreshFunction(){
-     setInterval(function(){
+function refreshFunction(){
+    setInterval(function(){
         get_game_status();
         if(!game_status)
         {
@@ -66,12 +69,11 @@ function get_number_puzzle_active()
             document.getElementById("games").innerHTML = "";
         }
         else
-        {
-
+        {   
             document.getElementById("subtitle").innerHTML = "";
             get_current_level_of_teams();
         }
-     }, 5000);
+     }, 10000);
  };
 
  

@@ -24,13 +24,18 @@ $(document).ready(function () {
             $("input.form-control:text").val("");
             $("#selectImage").prop("selectedIndex", 0);
             $("#puzzleActive").prop("checked", 0);
+            $('#previewImagePuzzle').attr("src", " ");
         }     
     });
     $("#selectImage").on("change", function () {
-        const selected_image = $("#selectImage option:selected").text();
+        const selected_image = $("#selectImage option:selected").val();
         if (selected_image != 0)
         {
-            Show_image(selected_image);
+            $("#previewImagePuzzle").attr("src", "/game/retrieveFile/"+selected_image);
+        }
+        else
+        {
+            $("#previewImagePuzzle").attr("src", " ");
         }
     });
 
@@ -101,12 +106,13 @@ function Get_puzzle(selected_puzzle){
         dataType: "json"
     }).then((data) => {
 
-        $("#previewImagePuzzle").attr("src",  data[0].image);
+        $("#previewImagePuzzle").attr("src", "/game/retrieveFile/"+data[0].image_id);
         $("#puzzleName").val(data[0].title);
         $("#puzzleQuestion").val(data[0].question);
         $("#puzzleHint").val(data[0].hint);
         $("#puzzleAnswer").val(data[0].answer);
         $("#puzzleActive").prop("checked",data[0].active == 1);
+        $("#selectImage").val(data[0].image_id);
     });
 }
 function Get_all_puzzles(){
