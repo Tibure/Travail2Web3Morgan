@@ -103,7 +103,7 @@
         </div>
 
         <div class="input-group mb-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOrder" id="managerOrder" class="btn"style="margin-right:10px">Gerer ordre generale</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalOrder" id="managerOrder" class="btn"style="margin-right:10px">Gérer l'ordre generale</button>
             <button type="submit" class="btn btn-success" id="btn_add" formaction="/manageGame/add_puzzle" style="margin-right:10px">Ajouter</button>
             <button disabled="false" type="submit" class="btn btn-primary" id="btn_save" formaction="/manageGame/save_puzzle" style="margin-right:10px">Sauvegarder</button>
             <button disabled="false" type="submit" class="btn btn-danger"  id="btn_delete" onclick="return confirm('Êtes vous sur ?')" formaction="/manageGame/delete_puzzle"style="margin-right:10px">Supprimer</button>
@@ -115,7 +115,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">Changer ordre des énigmes</h5>
+        <h5 class="modal-title" id="modalLabel">Changer l'ordre des énigmes</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
