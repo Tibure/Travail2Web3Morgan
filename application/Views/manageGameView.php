@@ -95,19 +95,8 @@
                 Le champ ne peux pas être vide.
             </div>
         </div>
-        <!--
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="order">Ordre de l'énigme</span>
-            </div>
-            <input type="number" class="form-control" placeholder=" Entrer l'ordre de l'énigme" aria-label="order"
-                aria-describedby="order" REQUIRED>
-            <div class="invalid-feedback">
-                Le champ ne peux pas être vide.
-            </div>
-        </div>
--->     <input type="text" name="puzzleID" id="puzzleID" value="-1" hidden>
-
+        
+        <input type="text" name="puzzleID" id="puzzleID" value="-1" hidden>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="puzzleActive" name="puzzleActive">
             <label class="form-check-label" for="enablePuzzle">Énigme active </label>
@@ -122,7 +111,7 @@
     </div>
 </form>
 
-<div class="modal fade" id="modalHints" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="modalOrder" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -10,6 +10,12 @@
             $this->request = new Request();
             $controller = $this->load_controller();
             $params = $this->request->get_params();
+
+            if(get_class($controller) == 'ErrorController')
+            {
+                $params = null;
+                $this->request->set_default_action();
+            }
             if(!isset($params)){
                 $params = array();
             }
@@ -20,7 +26,16 @@
         public function load_controller(){
             $controller_name = $this->request->get_controller_name() . "Controller";
             $controller_full_path = PATH_CONTROLLERS . '/' . $controller_name . '.php';
-            require($controller_full_path);
+            if(file_exists($controller_full_path))
+            {
+                require($controller_full_path);
+            }
+            else
+            {
+                $controller_name = 'errorController';
+                $controller_full_path = PATH_CONTROLLERS . '/' . $controller_name . '.php';
+                require($controller_full_path);
+            }
             $controller = new $controller_name();
             return $controller;
         }

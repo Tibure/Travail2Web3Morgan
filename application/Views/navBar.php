@@ -36,10 +36,10 @@
           else
           {
             echo("<li class=\"nav-item\">
-              <a class=\"nav-link\" href=\"/connection/show\">Log in<span class=\"sr-only\">(current)</span></a>
+              <a class=\"nav-link\" href=\"/connection/show\">Se connecter<span class=\"sr-only\">(current)</span></a>
             </li>");
             echo("<li class=\"nav-item\">
-              <a class=\"nav-link\" href=\"/inscription/show\">Sign In<span class=\"sr-only\">(current)</span></a>
+              <a class=\"nav-link\" href=\"/inscription/show\">S'inscrire<span class=\"sr-only\">(current)</span></a>
             </li>");
           }
           }

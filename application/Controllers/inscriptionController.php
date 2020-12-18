@@ -21,10 +21,10 @@
         }
 
         public function signIn(){
-            $email = $_POST['email']; 
-            $name = $_POST['username'];
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm_password'];
+            $email = htmlspecialchars($_POST['email']); 
+            $name = htmlspecialchars($_POST['username']); 
+            $password = htmlspecialchars($_POST['password']); 
+            $confirm_password = htmlspecialchars($_POST['confirm_password']); 
             $response = array("isValid" => false);
             if($password == "" || $confirm_password != $password)
             {
@@ -33,20 +33,20 @@
             else
             {
                 $isValid = $this->team_model->add_team($email, $name, $password);
-                if($isValid == true)
-                {
-                    $response = array("isValid" => true);
-                }
-                else if(is_array($isValid) && count($isValid)>2)
+                if(is_array($isValid) && count($isValid)>2)
                 {
                     if(strpos($isValid[2], "Email") !== false)
                     {
-                        $response = array("errorMessage" => "Email is already chosen", "inputID" => "email", "isValid" => false);
+                        $response = array("errorMessage" => "Cette email est déjà utilisé", "inputID" => "email", "isValid" => false);
                     }
                     else
                     {
-                        $response = array("errorMessage" => "name is already chosen", "inputID" => "username", "isValid" => false);
+                        $response = array("errorMessage" => "Ce nom est déjà utilisé", "inputID" => "username", "isValid" => false);
                     }
+                }
+                else
+                {
+                    $response = array("isValid" => true);
                 }
             }
         echo(json_encode($response));

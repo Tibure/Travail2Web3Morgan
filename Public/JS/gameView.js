@@ -7,7 +7,12 @@ $(document).ready(function () {
     document.getElementById("btn_hint").addEventListener("click", function(event){
         show_hints();
     })
-    document.getElementById("btn_answer").addEventListener("click", function (event) {
+    document.getElementById("btn_answer").addEventListener("click", function (event){
+        document.getElementById("btn_answer").disabled = true;
+        setTimeout(function()
+        {
+            document.getElementById("btn_answer").disabled = false;
+        },5000);
         verify_answer();
     });
 });
@@ -50,7 +55,7 @@ function fill_puzzle_info()
             $("#image").attr("src", "/game/retrieveFile/"+data.image_id);
         }
         else{
-            alert("Félicitation vous avez gagner!");
+            alert("Félicitation vous avez terminé !");
             window.location.href =  "../home/show";
         }
 

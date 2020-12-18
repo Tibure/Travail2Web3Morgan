@@ -20,8 +20,8 @@
         }
 
         public function verifyLogin(){
-            $email = $_POST['email']; 
-            $password = $_POST['password']; 
+            $email = htmlspecialchars($_POST['email']); 
+            $password = htmlspecialchars($_POST['password']); 
 
             $isValid = AuthenticationService::get_instance()->verifyLogin($email, $password);
         }

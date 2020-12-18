@@ -23,10 +23,10 @@ CREATE TABLE `tbl_file` (
 DROP TABLE IF EXISTS `tbl_Puzzle`;
 CREATE TABLE tbl_Puzzle(
         puzzle_ID        Int  Auto_increment  NOT NULL ,
-        title           nvarchar (50) NOT NULL UNIQUE,
-        question        nvarchar (100) NOT NULL UNIQUE,
-        answer          nvarchar (50) NOT NULL ,
-        hint			nvarchar (50) ,
+        title           nvarchar (200) NOT NULL UNIQUE,
+        question        nvarchar (200) NOT NULL UNIQUE,
+        answer          nvarchar (200) NOT NULL ,
+        hint			nvarchar (200) ,
         puzzle_order     Int NOT NULL UNIQUE,
         game_ID          Int NOT NULL,
         active 			boolean NOT NULL,
@@ -43,9 +43,8 @@ CREATE TABLE tbl_Teams(
 		current_puzzle_order Int DEFAULT 1,
         game_ID          Int,
         email           nvarchar (50) NOT NULL UNIQUE,
-        password        nvarchar (100) NOT NULL ,
-        game_master      Bool NOT NULL ,
-        last_answer_sent  Time 
+        password        nvarchar (200) NOT NULL ,
+        game_master      Bool NOT NULL 
 	,CONSTRAINT tbl_Teams_PK PRIMARY KEY (team_ID)
 	,CONSTRAINT tbl_Teams_tbl_Game_FK FOREIGN KEY (game_ID) REFERENCES tbl_Game(game_ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -68,7 +67,7 @@ DELIMITER ;;
 CREATE PROCEDURE add_team(
     in_email nvarchar(50),
     in_name nvarchar(50),
-	in_password nvarchar(100),
+	in_password nvarchar(200),
     in_game_master BOOL
 )
 BEGIN
@@ -85,8 +84,8 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Name not Unique', MYSQL_ERRNO = 2;
 	END IF;
     
-    INSERT INTO tbl_Teams(email, puzzle_ID ,name, password, game_master)
-			VALUES(in_email, (SELECT puzzle_ID FROM tbl_puzzle WHERE puzzle_order = MIN(puzzle_order)), in_name, in_password, in_game_master);
+    INSERT INTO tbl_Teams(email, current_puzzle_order ,name, password, game_master)
+			VALUES(in_email, 1, in_name, in_password, in_game_master);
     COMMIT;
 END;;
 DELIMITER ;
@@ -124,12 +123,12 @@ DELIMITER ;;
 DROP procedure IF EXISTS `add_puzzle`;
 DELIMITER ;;
 CREATE PROCEDURE `add_puzzle`(
-        inTitle           nvarchar (50),
-        inQuestion        nvarchar (50),
-        inAnswer          nvarchar (50),
-        inHint			  nvarchar (50),
-        inActive			boolean,
-		inImage			nvarchar(50)
+        inTitle           nvarchar (200),
+        inQuestion        nvarchar (200),
+        inAnswer          nvarchar (200),
+        inHint			  nvarchar (200),
+        inActive		  boolean,
+		inImage			  int
 )
 BEGIN
 
@@ -138,7 +137,7 @@ BEGIN
     START TRANSACTION;
     SET max_puzzle_order = (SELECT MAX(puzzle_order)+1 as puzzleordermax  FROM (SELECT  * FROM tbl_Puzzle) AS tempTable);
     SET latest_game_id = (SELECT MAX(game_ID) as gameid FROM (SELECT  * FROM tbl_Puzzle) AS tempTable);
-    INSERT INTO tbl_Puzzle(title, question, answer, hint, puzzle_order, game_ID, active, image)
+    INSERT INTO tbl_Puzzle(title, question, answer, hint, puzzle_order, game_ID, active, image_id)
 			VALUES(inTitle, inQuestion, inAnswer, inHint, max_puzzle_order , latest_game_id, inActive, inImage);
 	COMMIT;
 END;;
@@ -148,12 +147,12 @@ DROP procedure IF EXISTS `modify_puzzle`;
 DELIMITER ;;
 CREATE PROCEDURE `modify_puzzle`(
 		inPuzzle_ID		 Int,
-        inTitle           nvarchar (50),
-        inQuestion        nvarchar (50),
-        inAnswer          nvarchar (50),
-        inHint			  nvarchar (50),
+        inTitle           nvarchar (200),
+        inQuestion        nvarchar (200),
+        inAnswer          nvarchar (200),
+        inHint			  nvarchar (200),
         inActive		  boolean,
-		inImage			  nvarchar(50)
+		inImage			  int
 )
 BEGIN
     UPDATE tbl_Puzzle
@@ -163,7 +162,7 @@ BEGIN
         answer      = 	inAnswer ,
         hint		=	inHint ,
         active		=	inActive,
-		image		=	inImage
+		image_id	=	inImage
 	WHERE
 		puzzle_ID	=	 inPuzzle_ID;
 END;;
@@ -323,17 +322,16 @@ DELIMITER ;;
 DROP PROCEDURE IF EXISTS `take_out_puzzle_order`
 DELIMITER ;;
 
-insert into tbl_file(name) value('image1.jpg');
-insert into tbl_file(name) value('image2.jpg');
-insert into tbl_file(name) value('image3.jpg');
-insert into tbl_file(name) value('ordinateur.jpg');
+insert into tbl_file(name) value('chat.jpg');
+insert into tbl_file(name) value('perroquet.jpg');
+insert into tbl_file(name) value('sens.jpg');
 
 insert into tbl_Game (game_ID, start_time) values (1, null);
 insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image_id) values (1, 'Le chat', '4', 'Combien de patte possède un chat ?','Le double de celui des humains', 1, 1,1,'1');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image_id) values (2, 'Le perroquet', '2', 'Combien de patte possède un perroquet ?','La moitié de celle du chat', 2, 1,1,'2');
 insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image_id) values (3, 'Les sens', '3', 'Si je suis muet, aveugle et sourd, combien de sens me reste-t-il ?','Muet ne correspond pas à un sens', 3, 1,1,'3');
-insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active, image_id) values (4, 'La vue', 'Le nez', 'Je porte des lunettes mais je ne vois rien, qui suis-je ?','Qu\'est ce qui porte les lunettes sur notre visage', 4, 1,1,'4');
+insert into tbl_puzzle (puzzle_ID, title, answer, question , hint, puzzle_order, game_ID, active) values (4, 'La vue', 'Le nez', 'Je porte des lunettes mais je ne vois rien, qui suis-je ?','Qu\'est ce qui porte les lunettes sur notre visage', 4, 1,1);
 
-insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('admin',1,'admin@email.com','$2y$10$614glNUoyntsScYHa5Z7pO7pEUmnWLco99YbeAB.cb8KwGQEkzl8.',true,null);
-insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('player',1,'player@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false,null);
-insert into tbl_teams (name,game_ID,email,password,game_master,last_answer_sent) values ('player2',1,'player2@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false,null);
+insert into tbl_teams (name,game_ID,email,password,game_master) values ('admin',1,'admin@email.com','$2y$10$614glNUoyntsScYHa5Z7pO7pEUmnWLco99YbeAB.cb8KwGQEkzl8.',true); /*mot de passe admin1$ */
+insert into tbl_teams (name,game_ID,email,password,game_master) values ('player',1,'player@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false); /*mot de passe player1$ */
+insert into tbl_teams (name,game_ID,email,password,game_master) values ('player2',1,'player2@email.com','$2y$10$c0LyCySiy9CLAZKrbZtbu.xfK76xzJ.tIv7fSJI9FVGmj.UwbdI8q',false); /*mot de passe player1$ */

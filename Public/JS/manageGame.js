@@ -61,15 +61,12 @@ $(document).ready(function () {
                     node.innerText = element.title;
                     list.appendChild(node)
                 }
-               
+                var div = document.createElement("div");
+                $(div).append(list);
+                $("#modalOrder .modal-body").empty()
+                $("#modalOrder .modal-body").append(div);
             });
         })
-
-        var div = document.createElement("div");
-        $(div).append(list);
-        $("#modalOrder .modal-body").empty()
-        $("#modalOrder .modal-body").append(div);
-
     })
 
     $("#saveOrder").on("click", function(){

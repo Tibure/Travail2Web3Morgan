@@ -11,7 +11,7 @@
 
         protected function render_error($title, $errorMessage){
             $view = new View("errorView.php");
-                $data = array("errorMessage"=>$errorMessage);
+                $data = array("message"=>$errorMessage);
                 $content = $view->render($data);
                 echo $this->render_template_with_content($title, $content);
         }

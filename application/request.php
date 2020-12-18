@@ -61,7 +61,7 @@
             $this->controller_name = "home"; 
         }
 
-        private function set_default_action(){
+        public function set_default_action(){
             $this->action = "show"; 
         }
 

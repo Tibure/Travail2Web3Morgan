@@ -79,15 +79,15 @@
            
                 if($is_file_already_exist == true)
                 {
-                    echo $this->render_error("File Already Exist", "Le fichier existe déjà");
+                    echo $this->render_error("Une erreur est survenue", "Le fichier existe déjà");
                 }
                 else if($is_extension_ok == false)
                 {
-                    echo $this->render_error("File Extention Error", "L'extension n'est pas permise");
+                    echo $this->render_error("Une erreur est survenue", "L'extension n'est pas permise");
                 }
                 else if($is_not_empty == false)
                 {
-                    echo $this->render_error("No File Uploaded Error", "Vous devez choisir une image");
+                    echo $this->render_error("Une erreur est survenue", "Vous devez choisir une image");
                 }
            }
         }

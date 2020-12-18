@@ -1,7 +1,6 @@
 <?php
     require_once(PATH_CORE."/dbModel.php");
     require_once(PATH_DTO."/teamDTO.php");
-    require_once(PATH_PARSER."/teamParser.php");
     require_once(PATH_EXCEPTION."/noTeamFoundException.php");
     require_once(PATH_EXCEPTION."/insertTeamException.php");
     require_once(PATH_SERVICE."/authenticationService.php");
@@ -18,14 +17,6 @@
         const GET_NUMBER_PUZZLE_ACTIVE_PROC_NAME = "get_number_puzzle_active";
 
         public function get_all_teams():array{  
-            /*
-            $result = $this->mysqli->query("CALL ".self::GET_ALL_TEAMS_PROC_NAME."()");
-
-            $teams = array();
-            while ($row = $result->fetch_assoc()) {
-                array_push($teams, TeamParser::parse_sql_row($row));
-            }
-            return $teams;*/
             $pdo = $this->get_pdo_instance();
             $statementHandle = $pdo->query("CALL ".self::GET_ALL_TEAMS_PROC_NAME."()");
             $teams = $statementHandle->fetchAll(PDO::FETCH_CLASS, 'TeamDTO');
@@ -79,7 +70,6 @@
         public function add_team($email, $name, $password){
             try{
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                var_dump($passwordHash);
                 $pdo = $this->get_pdo_instance();
                 $statementHandle = $pdo->prepare("CALL ".self::ADD_TEAM_PROC_NAME."(:in_email, :in_name, :in_password, :in_game_master)");
                 $statementHandle->execute([

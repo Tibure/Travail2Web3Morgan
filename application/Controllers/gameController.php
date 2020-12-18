@@ -66,7 +66,7 @@
         }
 
         public function verify_answer(){
-            $answer = $_POST["answer"];
+            $answer = htmlspecialchars($_POST["answer"]);
             $is_answer_good = $this->gameModel->verify_answer($answer);
             echo(json_encode($is_answer_good));
         }

@@ -43,7 +43,14 @@ $(document).ready(function () {
                 } 
                 else 
                 {
-                    alert("Inscription impossible ! Verifiez les données entrée");
+                    if(!response.errorMessage)
+                    {
+                      alert("Inscription impossible ! Verifiez les données entrée. (les mots de passes doivent correspondre)");
+                    }
+                    else
+                    {
+                      alert("Inscription impossible ! Verifiez les données entrée. \n Erreur : " + response.errorMessage);
+                    }
                 }
             }).catch(function (error) {
                 alert("Erreur inconnue ! Veuillez nous contactez");

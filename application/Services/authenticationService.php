@@ -74,7 +74,12 @@
 
         public function attempt_login($password, $email)
         {
-            return password_verify($password, $this->team_model->get_credentials_from_email($email)["password"]);
+            $isValid = false;
+            if($this->team_model->get_credentials_from_email($email) != null && $password != null)
+            {
+                $isValid = password_verify($password, $this->team_model->get_credentials_from_email($email)["password"]);
+            }
+            return $isValid;
         }
     }
 ?>

@@ -64,11 +64,11 @@
         }
 
         public function add_puzzle(){
-            $puzzle_name = $_POST['puzzleName'];
-            $selectImage = $_POST['selectImage'];
-            $puzzleQuestion = $_POST['puzzleQuestion'];
-            $puzzleHint = $_POST['puzzleHint'];
-            $puzzleAnswer = $_POST['puzzleAnswer'];
+            $puzzle_name = htmlspecialchars($_POST['puzzleName']);
+            $selectImage = htmlspecialchars($_POST['selectImage']);
+            $puzzleQuestion = htmlspecialchars($_POST['puzzleQuestion']);
+            $puzzleHint = htmlspecialchars($_POST['puzzleHint']);
+            $puzzleAnswer = htmlspecialchars($_POST['puzzleAnswer']);
             $puzzleActive = isset($_POST['puzzleActive']) ? 1: 0;
             try{
                 $this->manageGame->add_puzzle($puzzle_name, $puzzleQuestion, $puzzleAnswer, $puzzleHint, $puzzleActive, $selectImage);
@@ -81,17 +81,13 @@
         }
         public function save_puzzle()
         {
-            $puzzle_name = $_POST['puzzleName'];
-            $selectImage = $_POST['selectImage'];
-            $puzzleQuestion = $_POST['puzzleQuestion'];
-            $puzzleHint = $_POST['puzzleHint'];
-            $puzzleAnswer = $_POST['puzzleAnswer'];
+            $puzzle_name = htmlspecialchars($_POST['puzzleName']);
+            $selectImage = htmlspecialchars($_POST['selectImage']);
+            $puzzleQuestion = htmlspecialchars($_POST['puzzleQuestion']);
+            $puzzleHint = htmlspecialchars( $_POST['puzzleHint']);
+            $puzzleAnswer = htmlspecialchars($_POST['puzzleAnswer']);
             $puzzleActive = isset($_POST['puzzleActive']) ? 1: 0;
-            $puzzleId = $_POST['puzzleID'];
-            if($puzzleActive == false)
-            {
-                
-            }
+            $puzzleId = htmlspecialchars($_POST['puzzleID']);
             try{
                 $this->manageGame->modify_puzzle($puzzleId, $puzzle_name, $puzzleQuestion, $puzzleAnswer, $puzzleHint, $puzzleActive, $selectImage);
                 $message = "Enigme modifié!";
@@ -103,7 +99,7 @@
 
         public function delete_puzzle(){
             
-            $puzzleId = $_POST['puzzleID'];
+            $puzzleId = htmlspecialchars($_POST['puzzleID']);
             try{
                 $this->manageGame->delete_a_puzzle($puzzleId);
                 $message = "Enigme supprimé!";
